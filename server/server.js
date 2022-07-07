@@ -19,7 +19,7 @@ if (enviorment === "development") {
     app.use(morgan('dev'))
 }
 app.use(cors());
-
+app.use(express.json())
 
 routes.map(r => app.use('/api/v1', require('./routes/' + r)))
 

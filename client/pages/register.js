@@ -1,7 +1,7 @@
 import Link from 'next/Link';
 import React, { useState } from 'react';
-
-
+import { addUser } from '../requests/user';
+import { toast } from 'react-toastify';
 
 
 const register = () => {
@@ -10,8 +10,17 @@ const register = () => {
     const [password, setPassword] = useState('');
 
 
-    const handleRegister = (e) => {
-        e.prevenetDefault();
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await addUser(name, email, password)
+            const { data: user } = data
+            toast("Registered")
+        } catch (err) {
+            // console.log(err.response.data.msg);
+            toast.error(err.response.data.msg)
+        }
+
     }
 
 
@@ -21,7 +30,7 @@ const register = () => {
         <input type="email" className="form-control mb-4" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="password" className="form-control mb-4" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-        <button className="btn btn-primary m-auto w-100" type="submit">Register</button>
+        <button disabled={!name || !password || !email} className="btn btn-primary m-auto w-100" >Register</button>
     </form>
 
 
