@@ -8,8 +8,9 @@ const TopNav = () => {
     const [current, setCurrent] = useState("/")
 
     useEffect(() => {
-        typeof window === 'undefined' && setCurrent(window.location.pathname)
-    }, [typeof window === 'undefined' && window.location.pathname])
+        const ty = typeof window === 'undefined'
+        process.browser && setCurrent(window.location.pathname)
+    }, [process.browser && window.location.pathname])
 
     return (
         <Menu mode='horizontal' selectedKeys={[current]}>
