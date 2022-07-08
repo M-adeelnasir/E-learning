@@ -66,7 +66,7 @@ exports.login = async (req, res) => {
         if (isMatch) {
             res.json({
                 success: true,
-                data: user,
+                data: { name: user.name, email: user.email, role: user.email, _id: user._id },
                 msg: "Logged In"
             })
         }

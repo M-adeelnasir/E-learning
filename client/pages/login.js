@@ -1,18 +1,27 @@
 import Link from 'next/Link';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { loginUser } from '../requests/user';
 import { toast } from 'react-toastify';
+import { Context } from '../context';
 
 const login = () => {
     const [email, setEmail] = useState('adnasirkbw@gmail.com');
     const [password, setPassword] = useState('hello123');
+
+    const { state, dispatch } = useContext(Context)
+
+    // console.log(state);
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const { data } = await loginUser(email, password)
             const { data: user } = data;
-            console.log(user);
+            dispatch({
+                type: 'LOGIN',
+                payload: user
+            })
             toast("Logged In")
         } catch (err) {
             toast(err.response.data.msg)
