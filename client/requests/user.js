@@ -11,3 +11,4 @@ export const loginUser = async (email, password) => {
 export const logoutUser = async () => {
     return await axios.get('/api/v1/user/logout')
 }
+
