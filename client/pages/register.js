@@ -1,7 +1,10 @@
 import Link from 'next/Link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { addUser } from '../requests/user';
 import { toast } from 'react-toastify';
+import { useContext } from 'react';
+import { Context } from '../context';
+import { useRouter } from 'next/router'
 
 
 const register = () => {
@@ -9,6 +12,13 @@ const register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { state } = useContext(Context)
+    const { user } = state
+
+    const router = useRouter()
+    useEffect(() => {
+        if (user && user !== null) router.push('/')
+    }, [user])
 
     const handleRegister = async (e) => {
         e.preventDefault();
