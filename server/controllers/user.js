@@ -64,11 +64,7 @@ exports.login = async (req, res) => {
             })
         }
         if (isMatch) {
-            res.json({
-                success: true,
-                data: { name: user.name, email: user.email, role: user.email, _id: user._id },
-                msg: "Logged In"
-            })
+            sendToken(res, 200, user)
         }
 
 
@@ -80,3 +76,58 @@ exports.login = async (req, res) => {
         })
     }
 }
+
+
+
+
+exports.logout = async (req, res) => {
+    try {
+        res.clearCookie("token")
+        console.log("user removed from cookies");
+        return res.json({
+            success: true,
+            msg: "logout"
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//send token
+const sendToken = async (res, statusCode, user) => {
+    const token = await user.getJwtToken();
+
+    const options = {
+        expires: new Date(Date.now() + process.env.JWT_TOKEN_COOKIE_EXPIRES * 24 * 12 * 60 * 1000),
+        httpOnly: true
+    }
+
+    res.status(statusCode).cookie('token', token, options).json({
+        success: true,
+        data: { name: user.name, email: user.email, role: user.role, _id: user._id, token: token },
+        msg: "Logged In"
+    })
+
+}
+
