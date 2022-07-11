@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         min: 6
     },
+    resetPasswordLink: {
+        type: String,
+        default: ''
+    },
     role: {
         type: [String],
         default: ["Subscriber"],

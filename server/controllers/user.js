@@ -1,6 +1,7 @@
 
 const User = require('../models/user');
-
+const jwt = require('jsonwebtoken')
+const AWS = require('aws-sdk')
 
 exports.create = async (req, res) => {
     try {
@@ -98,22 +99,6 @@ exports.logout = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //send token
 const sendToken = async (res, statusCode, user) => {
     const token = await user.getJwtToken();
@@ -144,3 +129,90 @@ exports.currentUser = async (req, res) => {
         console.log("ERROR==>", err);
     }
 }
+
+exports.forgotPassword = async (req, res) => {
+    const { email } = req.body;
+
+
+    try {
+        AWS.config.update({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            region: process.env.AWS_REGION
+        });
+
+
+        const user = await User.findOne({ email })
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: `No user found with ${email} Email`
+            })
+        }
+
+
+        const token = jwt.sign({ name: user.name }, process.env.JWT_SECRET_KEY, { expiresIn: '20m' })
+        const resetLink = `${process.env.CLIENT_URL}/auth/password-reset/${token}`
+
+        user.updateOne({ resetPasswordLink: resetLink }).exec((err, success) => {
+            if (err) {
+                return res.status(404).json({
+                    success: false,
+                    msg: "Reset passoward Failed"
+                })
+            }
+
+            var params = {
+                Destination: {
+                    ToAddresses: [
+                        user.email
+                    ]
+                },
+                Message: { /* required */
+                    Body: { /* required */
+                        Html: {
+                            Charset: "UTF-8",
+                            Data: `<h2>Hey! ${user.name}</h2>
+                            <p>Click the following link to reset your password</p>
+                            <p>${resetLink}</p>
+                            `
+                        }
+                    },
+                    Subject: {
+                        Charset: 'UTF-8',
+                        Data: 'Follow the link to reset your passord'
+                    }
+                },
+                Source: process.env.EMAIL_FROM, /* required */
+                ReplyToAddresses: [
+                    process.env.EMAIL_TO
+                ],
+            };
+
+
+            var sendPromise = new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(params).promise();
+            sendPromise.then((data) => {
+                console.log(data);
+                res.json({
+                    Success: true,
+                    token: token,
+                    msg: `Email has been sent to ${user.email}`
+                })
+            }).catch((err) => {
+                console.log(err);
+                res.status(400).json({
+                    success: false,
+                    msg: "Email sent failed try again with a Valid email"
+                })
+            })
+        })
+
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
+}
+
