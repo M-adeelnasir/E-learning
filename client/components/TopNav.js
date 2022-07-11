@@ -53,20 +53,25 @@ const TopNav = () => {
             </Menu.Item>
 
             {!user && user == null && <Menu.Item key='/login' onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined />}>
-                <Link href='login'>
+                <Link href='/login'>
                     <a>Login</a>
                 </Link>
             </Menu.Item>}
             {!user && user == null && <Menu.Item key='/register' onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined />}>
-                <Link href='register'>
+                <Link href='/register'>
                     <a>Register</a>
                 </Link>
             </Menu.Item>}
 
 
-            {user && user !== null && <Menu.SubMenu key='/user' title={user && user.name.split(' ')[0]} icon={<UserOutlined />}>
+            {user && user !== null && <Menu.SubMenu key='/logout' title={user && user.name.split(' ')[0]} icon={<UserOutlined />}>
                 {user && user !== null && <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />} className="ml-auto">
                     Logout
+                </Menu.Item>}
+                {user && user !== null && <Menu.Item icon={<LogoutOutlined />} key='/dashboard' className="ml-auto">
+                    <Link href='/user'>
+                        <a>Dashboard</a>
+                    </Link>
                 </Menu.Item>}
             </Menu.SubMenu>}
 
