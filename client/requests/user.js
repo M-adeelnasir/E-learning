@@ -12,3 +12,7 @@ export const logoutUser = async () => {
     return await axios.get('/api/v1/user/logout')
 }
 
+
+export const currentUser = async () => {
+    return await axios.get('/api/v1//current-user')
+}
