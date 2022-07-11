@@ -16,3 +16,7 @@ export const logoutUser = async () => {
 export const currentUser = async () => {
     return await axios.get('/api/v1//current-user')
 }
+
+export const forgotPassword = async (email) => {
+    return await axios.post('/api/v1/forgot-password', { email })
+}
