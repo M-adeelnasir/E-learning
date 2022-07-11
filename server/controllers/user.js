@@ -2,6 +2,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken')
 const AWS = require('aws-sdk')
+const _ = require('lodash');
 
 exports.create = async (req, res) => {
     try {
@@ -154,7 +155,7 @@ exports.forgotPassword = async (req, res) => {
         const token = jwt.sign({ name: user.name }, process.env.JWT_SECRET_KEY, { expiresIn: '20m' })
         const resetLink = `${process.env.CLIENT_URL}/auth/password-reset/${token}`
 
-        user.updateOne({ resetPasswordLink: resetLink }).exec((err, success) => {
+        user.updateOne({ resetPasswordLink: token }).exec((err, success) => {
             if (err) {
                 return res.status(404).json({
                     success: false,
@@ -216,3 +217,87 @@ exports.forgotPassword = async (req, res) => {
     }
 }
 
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const { confirmPassword, newPassword } = req.body;
+        const { resetToken } = req.params
+        if (!confirmPassword || !newPassword) {
+            return res.status(400).json({
+                success: false,
+                msg: "Password should not be empty"
+            })
+        }
+        if (confirmPassword !== newPassword) {
+            return res.status(400).json({
+                success: false,
+                msg: "Password does not match"
+            })
+        }
+
+        if (!resetToken) {
+            return res.status(400).json({
+                success: false,
+                msg: "No link found"
+            })
+        }
+
+        try {
+            const token = jwt.verify(resetToken, process.env.JWT_SECRET_KEY)
+            if (!token) {
+                return res.status(400).json({
+                    success: false,
+                    msg: "Invalid or expired token"
+                })
+            }
+        } catch (err) {
+            console.log(err);
+
+            res.status(400).json({
+                success: false,
+                msg: "Expired or invalid token"
+            })
+        }
+
+        let user = await User.findOne({ resetPasswordLink: resetToken })
+        if (!user) {
+            console.log("sss");
+            return res.status(400).json({
+                success: false,
+                msg: "Invalid or expired Link"
+            })
+        }
+
+        const updateFields = {
+            resetPasswordLink: "",
+            password: newPassword
+        }
+
+        user = _.extend(user, updateFields)
+        user.save((err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({
+                    success: false,
+                    msg: "Reset password Faild, try later"
+                })
+            }
+
+            return res.status(200).json({
+                success: true,
+                msg: "Password Updated Successfully",
+            })
+        })
+
+
+
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            success: false,
+            msg: "Reset password Faild, try later"
+        })
+    }
+}
