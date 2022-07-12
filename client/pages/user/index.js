@@ -2,22 +2,27 @@ import React from 'react'
 import { Context } from '../../context'
 import { useContext } from 'react'
 import UserRoute from '../../components/routes/userRoute'
+import TopNav from '../../components/TopNav'
+import UserNav from '../../components/nav/UserNav'
 
-const index = () => {
-
-
-
-    const { state: { user } } = useContext(Context)
-
+const Index = () => {
 
     return (
         <>
             <UserRoute>
-                <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>{JSON.stringify(user)}</h1>
+                <div className="container-fluid d-flex flex-row p-0">
+                    <div className="col-md-2">
+                        <UserNav />
+                    </div>
+                    <div className='col-md-10'>
+                        <TopNav />
+                        <div>Hello</div>
+                    </div>
+                </div>
             </UserRoute>
         </>
 
     )
 }
 
-export default index
+export default Index

@@ -153,7 +153,7 @@ exports.forgotPassword = async (req, res) => {
 
 
         const token = jwt.sign({ name: user.name }, process.env.JWT_SECRET_KEY, { expiresIn: '20m' })
-        const resetLink = `${process.env.CLIENT_URL}/auth/password-reset/${token}`
+        const resetLink = `${process.env.CLIENT_URL}/auth/password/reset/${token}`
 
         user.updateOne({ resetPasswordLink: token }).exec((err, success) => {
             if (err) {
@@ -241,17 +241,13 @@ exports.resetPassword = async (req, res) => {
                 msg: "No link found"
             })
         }
+        console.log(resetToken);
 
         try {
+
             const token = jwt.verify(resetToken, process.env.JWT_SECRET_KEY)
-            if (!token) {
-                return res.status(400).json({
-                    success: false,
-                    msg: "Invalid or expired token"
-                })
-            }
         } catch (err) {
-            console.log(err);
+            console.log("=======>", err);
 
             res.status(400).json({
                 success: false,
@@ -291,7 +287,7 @@ exports.resetPassword = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             msg: "Reset password Faild, try later"
         })

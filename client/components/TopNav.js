@@ -1,6 +1,6 @@
 import { Menu } from 'antd';
 import React, { useState, useEffect, useContext } from 'react'
-import { AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, DashboardOutlined } from '@ant-design/icons';
 import Link from 'next/Link'
 import { useRouter } from 'next/router';
 import { logoutUser } from '../requests/user';
@@ -45,7 +45,7 @@ const TopNav = () => {
 
 
     return (
-        <Menu mode='horizontal' selectedKeys={[current]} className="d-flex">
+        <Menu mode='horizontal' selectedKeys={[current]} className="d-flex p-2">
             <Menu.Item key='/' onClick={(e) => setCurrent(e.key)} icon={<AppstoreOutlined />}>
                 <Link href='/'>
                     <a>App</a>
@@ -65,14 +65,15 @@ const TopNav = () => {
 
 
             {user && user !== null && <Menu.SubMenu key='/logout' title={user && user.name.split(' ')[0]} icon={<UserOutlined />}>
-                {user && user !== null && <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />} className="ml-auto">
-                    Logout
-                </Menu.Item>}
-                {user && user !== null && <Menu.Item icon={<LogoutOutlined />} key='/dashboard' className="ml-auto">
+                {user && user !== null && <Menu.Item icon={<DashboardOutlined />} key='/dashboard' className="ml-auto">
                     <Link href='/user'>
                         <a>Dashboard</a>
                     </Link>
                 </Menu.Item>}
+                {user && user !== null && <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />} className="ml-auto">
+                    Logout
+                </Menu.Item>}
+
             </Menu.SubMenu>}
 
 

@@ -20,3 +20,6 @@ export const currentUser = async () => {
 export const forgotPassword = async (email) => {
     return await axios.post('/api/v1/forgot-password', { email })
 }
+export const resetPassword = async (confirmPassword, newPassword, resetToken) => {
+    return await axios.post(`/api/v1/reset-password/${resetToken}`, { confirmPassword, newPassword })
+}

@@ -1,8 +1,13 @@
 import React from 'react'
+import TopNav from '../components/TopNav'
+
 
 const Index = () => {
     return (
-        <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>E-Learning Management System</h1>
+        <>
+            <TopNav />
+            <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>E-Learning Management System</h1>
+        </>
     )
 }
 

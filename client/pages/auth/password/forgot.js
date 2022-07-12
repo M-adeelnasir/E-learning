@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { forgotPassword } from '../../requests/user';
+import { forgotPassword } from '../../../requests/user';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('adeelnasirkbw@gmail.com');

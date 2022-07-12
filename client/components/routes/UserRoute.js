@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { currentUser } from '../../requests/user'
 import { useRouter } from 'next/router'
+import UserNav from '../nav/UserNav'
+import TopNav from '../TopNav'
 
 const UserRoute = ({ children }) => {
 
     const [ok, setOk] = useState(false)
     const router = useRouter()
 
+
+
     const getUser = async () => {
         try {
             const { data } = await currentUser()
             const { success } = data
+            console.log(success);
             if (success === true) setOk(true)
 
         } catch (err) {
@@ -26,7 +31,10 @@ const UserRoute = ({ children }) => {
 
     return (
         <>
+
+
             {!ok && (<>{children}</>)}
+
         </>
     )
 }

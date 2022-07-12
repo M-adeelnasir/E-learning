@@ -4,9 +4,10 @@ import { loginUser } from '../requests/user';
 import { toast } from 'react-toastify';
 import { Context } from '../context';
 import { useRouter } from 'next/router'
+import TopNav from '../components/TopNav'
 
 const login = () => {
-    const [email, setEmail] = useState('adnasirkbw@gmail.com');
+    const [email, setEmail] = useState('adeelnasirkbw@gmail.com');
     const [password, setPassword] = useState('hello123');
     const [loading, setLoading] = useState(false)
 
@@ -61,16 +62,24 @@ const login = () => {
 
     return (
         <>
+            <TopNav />
             <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>Login</h1>
 
             <div className="container mt-3 col-md-4 ">
                 <div className="border p-5 ">
                     {form()}
-                    <div className='mt-3'>
-                        <span>No account? </span>
-                        <Link href='/register'>
-                            <a >Sign Up</a>
-                        </Link>
+                    <div className='d-flex justify-content-between'>
+                        <div className='mt-3'>
+                            <span>No account? </span>
+                            <Link href='/register'>
+                                <a >Sign Up</a>
+                            </Link>
+                        </div>
+                        <div className='mt-3 space-between'>
+                            <Link href='/auth/password/forgot'>
+                                <a className='text-danger' style={{ textDecoration: 'underline' }}>Forgot Password</a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

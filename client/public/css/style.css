@@ -1,3 +1,14 @@
 .jumbotron {
   background-image: linear-gradient(to right, #007bff, #000);
 }
+
+.hover-link {
+  transition: all 0.3s ease-in-out;
+}
+.hover-link:hover {
+  color: white;
+  background-color: rgba(194, 209, 245, 0.78);
+}
+.hr-hieght {
+  height: 100vh !important;
+}

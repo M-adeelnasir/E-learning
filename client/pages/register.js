@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { Context } from '../context';
 import { useRouter } from 'next/router'
+import TopNav from '../components/TopNav'
+
 
 
 const register = () => {
@@ -46,6 +48,7 @@ const register = () => {
 
     return (
         <>
+            <TopNav />
             <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>Register</h1>
 
             <div className="container mt-3 col-md-4 ">
