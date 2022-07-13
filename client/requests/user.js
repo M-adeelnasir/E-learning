@@ -23,3 +23,7 @@ export const forgotPassword = async (email) => {
 export const resetPassword = async (confirmPassword, newPassword, resetToken) => {
     return await axios.post(`/api/v1/reset-password/${resetToken}`, { confirmPassword, newPassword })
 }
+
+export const checkInstructor = async () => {
+    return await axios.get('/api/v1/instructor')
+}

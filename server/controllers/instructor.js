@@ -51,3 +51,25 @@ exports.makeInstructor = async (req, res) => {
     }
 }
 
+
+exports.currentInstructor = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        const user = await User.findById({ _id })
+        if (!user) {
+            return res.status(404).json({
+                msg: "No user Found"
+            })
+        }
+        res.json({
+            success: true,
+            data: user
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
+}
