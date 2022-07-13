@@ -1,6 +1,8 @@
 const User = require('../models/user')
-const stripe = require('stripe')
+const stripe = require('stripe')(process.env.STRIP_SERCRET_KEY)
 const queryString = require('query-string')
+
+
 exports.makeInstructor = async (req, res) => {
     try {
         //1)  find the use in db
@@ -11,23 +13,30 @@ exports.makeInstructor = async (req, res) => {
                 msg: "No user Found"
             })
         }
+        console.log(user)
+
 
         //2) check idf user have already stripe_account_id in db
         if (!user.stripe_account_id) {
-            const account = await stripe.accounts.create({ type: 'express' })
-            console.log(account)
+            const account = await stripe.accounts.create({
+                type: 'express'
+
+            })
+            // console.log(account)
             user.stripe_account_id = account.id
             user.save()
         }
 
 
         //2) create account link on base account id (for complete strip onboarding)
-        const accountLink = await stripe.accountLinks.create({
+        let accountLink = await stripe.accountLinks.create({
             account: user.stripe_account_id,
             refresh_url: process.env.STRIPE_REDIRECT_URL,
             return_url: process.env.STRIPE_REDIRECT_URL,
+            type: "account_onboarding",
         })
         console.log(accountLink)
+
 
         // 3) pre fillt he email on frontend
         accountLink = Object.assign(accountLink, {
@@ -38,6 +47,7 @@ exports.makeInstructor = async (req, res) => {
         res.send(`${accountLink.url}?${queryString.stringify(accountLink)}`)
 
     } catch (err) {
-
+        console.log(err.message);
     }
 }
+

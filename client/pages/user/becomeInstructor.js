@@ -4,6 +4,7 @@ import { Context } from '../../context'
 import { toast } from 'react-toastify'
 import { UserSwitchOutlined, LoadingOutlined } from '@ant-design/icons'
 import TopNav from '../../components/TopNav'
+import { makeInstructor } from '../../requests/stripe'
 
 
 const BecomeInstructor = () => {
@@ -11,8 +12,30 @@ const BecomeInstructor = () => {
     const { state: { user } } = useContext(Context)
 
 
-    const handlePayout = () => {
-        console.log("clicked")
+    const handlePayout = async () => {
+        setLoading(true)
+        // try {
+        //     const { data } = await makeInstructor()
+        //     setLoading(false)
+        //     console.log(data);
+
+        //     window.location.href = data
+        // } catch (err) {
+        //     setLoading(false)
+        //     console.log(err);
+        // }
+        console.log("click 1");
+        makeInstructor().then((res) => {
+            console.log("click 2");
+            setLoading(false)
+            console.log(res);
+            console.log(res.data);
+
+            // window.location.href = data
+        }).catch((err) => {
+            setLoading(false)
+            console.log(err);
+        })
     }
 
     return (
@@ -26,7 +49,7 @@ const BecomeInstructor = () => {
                     <p className='h1 mt-3'>Setup payout to publish courses on</p>
                     <p className='h1'>E-learning</p>
                     <p className="text-warning h6 mt-3  ">E-learning partners with stripe to transfer earnings to bank account</p>
-                    <button disabled={!user || user === null || user.role.includes("instructor")} className='btn btn-primary mt-3 btn-block w-50' onClick={handlePayout}> {loading ? (<LoadingOutlined />) : (<span>Payout Setup</span>)}</button>
+                    <button disabled={!user || user === null || user.role.includes("instructor") || loading} className='btn btn-primary mt-3 btn-block w-50' onClick={handlePayout}> {loading ? (<LoadingOutlined />) : (<span>Payout Setup</span>)}</button>
 
                     <p className="h6 mt-3">You will be redirected to stripe to complete onboarding process</p>
 
