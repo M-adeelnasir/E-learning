@@ -16,7 +16,8 @@ const UserRoute = ({ children }) => {
             const { data } = await currentUser()
             const { success } = data
             console.log(success);
-            if (success === true) setOk(true)
+            console.log(success);
+            if (success) return setOk(true)
 
         } catch (err) {
             console.log(err);
@@ -31,7 +32,6 @@ const UserRoute = ({ children }) => {
 
     return (
         <>
-
 
             {!ok && (<>{children}</>)}
 

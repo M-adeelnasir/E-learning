@@ -51,7 +51,7 @@ const TopNav = () => {
                     <a>App</a>
                 </Link>
             </Menu.Item>
-            {user && user !== null && user.role.includes("instructor") ? (<Menu.Item key='/instuctor' onClick={(e) => setCurrent(e.key)} icon={<CarryOutOutlined />}>
+            {user && user !== null && user.role.includes("instructor") ? (<Menu.Item key='/instuctor/a' onClick={(e) => setCurrent(e.key)} icon={<CarryOutOutlined />}>
                 <Link href='/instructor/course/create'>
                     <a>Create Course</a>
                 </Link>
@@ -74,6 +74,11 @@ const TopNav = () => {
                 </Link>
             </Menu.Item>}
 
+            {user && user !== null && user.role.includes("instructor") && (<Menu.Item key='/instuctor' onClick={(e) => setCurrent(e.key)} icon={<CarryOutOutlined />}>
+                <Link href='/instructor'>
+                    <a>Instructor</a>
+                </Link>
+            </Menu.Item>)}
 
             {user && user !== null && <Menu.SubMenu key='/logout' title={user && user.name.split(' ')[0]} icon={<UserOutlined />}>
                 {user && user !== null && <Menu.Item icon={<DashboardOutlined />} key='/dashboard' className="ml-auto">

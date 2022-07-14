@@ -5,7 +5,9 @@ import UserRoute from '../../components/routes/userRoute'
 import TopNav from '../../components/TopNav'
 import UserNav from '../../components/nav/UserNav'
 
-const Index = () => {
+const index = () => {
+
+
 
     return (
         <>
@@ -25,4 +27,4 @@ const Index = () => {
     )
 }
 
-export default Index
+export default index

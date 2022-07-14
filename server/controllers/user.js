@@ -114,20 +114,30 @@ const sendToken = async (res, statusCode, user) => {
         data: { name: user.name, email: user.email, role: user.role, _id: user._id, token: token },
         msg: "Logged In"
     })
-
 }
 
 
 exports.currentUser = async (req, res) => {
     console.log(req.user);
     try {
-        const user = await User.findById({ _id: req.user._id }).select('-password')
+        const { _id } = req.user;
+        const user = await User.findById({ _id }).select("-password")
+        if (!user) {
+            return res.status(404).json({
+                msg: "No user Found"
+            })
+        }
         res.json({
-            data: user,
-            success: true
+            success: true,
+            data: user
         })
+
     } catch (err) {
         console.log("ERROR==>", err);
+        res.status(500).json({
+            success: false,
+            msg: "Server error"
+        })
     }
 }
 
