@@ -5,6 +5,7 @@ import Resizer from "react-image-file-resizer";
 import { uploadImage } from '../../../requests/course';
 import CreateCourse from '../../../components/forms/course/CreateCourse'
 import { toast } from 'react-toastify';
+import InstructorRoute from '../../../components/routes/InstructorRoute'
 
 
 const Create = () => {
@@ -49,26 +50,26 @@ const Create = () => {
 
 
 
-
-
-
     return (
         <>
 
-            <div className="container-fluid d-flex flex-row p-0">
-                <div className="col-md-2">
-                    <UserNav />
-                </div>
-                <div className='col-md-10'>
-                    <TopNav />
-                    <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>Create Course</h1>
-                    <div className="container-fluid ">
-                        <h1>Course Details</h1>
-                        <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} />
+            <InstructorRoute>
 
+                <div className="container-fluid d-flex flex-row p-0">
+                    <div className="col-md-2">
+                        <UserNav />
+                    </div>
+                    <div className='col-md-10'>
+                        <TopNav />
+                        <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>Create Course</h1>
+                        <div className="container-fluid ">
+                            <h1>Course Details</h1>
+                            <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} />
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            </InstructorRoute>
 
         </>
 

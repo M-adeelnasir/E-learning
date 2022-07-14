@@ -37,7 +37,7 @@ exports.checkInstructor = async (req, res, next) => {
         }
 
         if (!user.role.includes("instructor")) {
-            return res.sendStatus(403).json({
+            return res.status(401).json({
                 success: false,
                 msg: "This user has not instructor previlages"
             })

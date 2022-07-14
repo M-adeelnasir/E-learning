@@ -29,7 +29,7 @@ exports.uploadImage = async (req, res) => {
         const type = image.split('/')[1].split(';')[0]
         const params = {
             Bucket: "elearing",
-            Key: `${nanoid()}.${type}`,  //kjsdcbuow.jpeg
+            Key: `courses/${nanoid()}.${type}`,  //kjsdcbuow.jpeg
             Body: base64Data,
             ACL: 'public-read',
             ContentEncoding: "base64",
@@ -45,13 +45,17 @@ exports.uploadImage = async (req, res) => {
             res.json({
                 success: true,
                 data
-            }))
-    })
+            })
+        })
 
 
-} catch (err) {
-    console.log(err);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
 
-}
+    }
 
 }

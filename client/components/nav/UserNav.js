@@ -13,7 +13,7 @@ const UserNav = () => {
                     <Link href='/instructor' ><a className="nav-link h6" >Dashboard</a></Link>
                 </li>
                 <li className="nav-item hover-link">
-                    <Link href='/' ><a className="nav-link h6" >Ceate Course</a></Link>
+                    <Link href='/instructor/course/create' ><a className="nav-link h6" >Ceate Course</a></Link>
                 </li>
             </ul>
 

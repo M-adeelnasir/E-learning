@@ -9,14 +9,14 @@ exports.create = async (req, res) => {
         const { name, password, email } = req.body;
 
         if (!name || !password || !email) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 msg: "All fields are required"
             })
         }
 
         if (password.length < 6) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 msg: "Password should more then 6 chars"
             })
@@ -24,7 +24,7 @@ exports.create = async (req, res) => {
 
         const userExists = await User.findOne({ email })
         if (userExists) {
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
                 msg: "Account already exists"
             })
