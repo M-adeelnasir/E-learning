@@ -99,7 +99,6 @@ exports.logout = async (req, res) => {
 }
 
 
-
 //send token
 const sendToken = async (res, statusCode, user) => {
     const token = await user.getJwtToken();

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Select } from 'antd'
+import { Select, Avatar } from 'antd'
 
 const { Option } = Select
-
-const CreateCourse = ({ setState, state, handleChange, handleSubmit }) => {
+const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText }) => {
 
     const children = [];
     for (let i = 9.99; i <= 100.99; i++) {
@@ -53,13 +52,18 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit }) => {
                 }
             </div>
 
-            <div className="row">
-                <div className="form-group">
+            <div className="d-flex w-0">
+                <div className="form-group d-flex">
                     <label className='btn btn-primary mt-3'>
-                        {loading ? "Uploading..." : "Image Upload"}
-                        <input type="file" name="image" onChange={handleChange} accept='image/*' hidden />
+                        {uploadBtnText}
+                        <input type="file" name="image" onChange={handleImage} accept='image/*' hidden />
                     </label>
                 </div>
+                {preview &&
+                    <div className='mt-3 pl-5'>
+                        <Avatar width={200} src={preview} />
+                    </div>
+                }
             </div>
             <div className="d-flex justify-content-center pb-5">
                 <button className='mt-3 btn btn-outline-primary w-50 btn-block '>Save And Continue</button>
