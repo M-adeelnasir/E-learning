@@ -65,6 +65,7 @@ exports.removeImage = async (req, res) => {
         const params = {
             Bucket: image.Bucket,
             Key: image.key,
+
         }
 
         s3.deleteObject(params, (err, data) => {
@@ -86,3 +87,6 @@ exports.removeImage = async (req, res) => {
         })
     }
 }
+
+
+// rajuu
