@@ -6,7 +6,7 @@ import { uploadImage } from '../../../requests/course';
 import CreateCourse from '../../../components/forms/course/CreateCourse'
 import { toast } from 'react-toastify';
 import InstructorRoute from '../../../components/routes/InstructorRoute'
-
+import { removeImage } from '../../../requests/course';
 
 const Create = () => {
 
@@ -20,6 +20,7 @@ const Create = () => {
     })
     const [preview, setPriview] = useState("")
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")
+    const [image, setImage] = useState({})
 
 
     const handleSubmit = async (e) => {
@@ -38,16 +39,33 @@ const Create = () => {
         try {
             Resizer.imageFileResizer(file, 300, 300, "JPEG", 100, 0, async (uri) => {
                 const { data } = await uploadImage(uri)
-                console.log(data);
-                setState({ ...state, loading: true })
+                setImage(data.data)
+                setState({ ...state, loading: false })
             })
         } catch (err) {
-            setState({ ...state, loading: true })
+            setState({ ...state, loading: false })
             console.log(err);
             toast("Image uploaf failed! try later")
         }
     }
 
+    const handleImageReomve = async () => {
+        setState({ ...state, loading: true })
+
+        try {
+            const res = await removeImage(image)
+            setImage({})
+            setPriview("")
+            setState({ ...state, loading: false })
+            setUploadBtnText("Upload Image")
+
+
+
+        } catch (err) {
+            console.log(err);
+            toast("Image Delete failed")
+        }
+    }
 
 
     return (
@@ -64,9 +82,10 @@ const Create = () => {
                         <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>Create Course</h1>
                         <div className="container-fluid ">
                             <h1>Course Details</h1>
-                            <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} />
-
+                            <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} handleImageReomve={handleImageReomve} />
                         </div>
+
+                        {JSON.stringify(image, null, 4)}
                     </div>
                 </div>
             </InstructorRoute>

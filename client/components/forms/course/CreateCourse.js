@@ -1,8 +1,8 @@
 import React from 'react'
-import { Select, Avatar, Button } from 'antd'
+import { Select, Avatar, Button, Badge } from 'antd'
 
 const { Option } = Select
-const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText }) => {
+const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText, handleImageReomve }) => {
 
     const children = [];
     for (let i = 9.99; i <= 100.99; i++) {
@@ -61,7 +61,9 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
                 </div>
                 {preview &&
                     <div className='mt-3 pl-5'>
-                        <Avatar width={64} src={preview} />
+                        <Badge count="X" onClick={handleImageReomve} style={{ cursor: "pointer" }}>
+                            <Avatar width={64} src={preview} />
+                        </Badge>
                     </div>
                 }
             </div>
