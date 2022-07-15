@@ -62,6 +62,7 @@ const Create = () => {
 
 
         } catch (err) {
+            setState({ ...state, loading: false })
             console.log(err);
             toast("Image Delete failed")
         }
@@ -84,8 +85,6 @@ const Create = () => {
                             <h1>Course Details</h1>
                             <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} handleImageReomve={handleImageReomve} />
                         </div>
-
-                        {JSON.stringify(image, null, 4)}
                     </div>
                 </div>
             </InstructorRoute>

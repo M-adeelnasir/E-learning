@@ -3,17 +3,15 @@ var { nanoid } = require("nanoid");
 
 
 
-
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
+});
 
 exports.uploadImage = async (req, res) => {
 
     try {
-
-        const s3 = new AWS.S3({
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            region: process.env.AWS_REGION
-        });
 
         const { image } = req.body
         if (!image) {
@@ -58,4 +56,33 @@ exports.uploadImage = async (req, res) => {
 
     }
 
+}
+
+exports.removeImage = async (req, res) => {
+    try {
+        const { image } = req.body;
+        console.log(image)
+        const params = {
+            Bucket: image.Bucket,
+            Key: image.key,
+        }
+
+        s3.deleteObject(params, (err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    msg: "Image removed Failed"
+                })
+            }
+            console.log(data)
+            res.json({
+                success: true,
+                msg: "Image Delete"
+            })
+        })
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
 }
