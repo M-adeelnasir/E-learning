@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select, Avatar } from 'antd'
+import { Select, Avatar, Button } from 'antd'
 
 const { Option } = Select
 const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText }) => {
@@ -61,13 +61,15 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
                 </div>
                 {preview &&
                     <div className='mt-3 pl-5'>
-                        <Avatar width={200} src={preview} />
+                        <Avatar width={64} src={preview} />
                     </div>
                 }
             </div>
             <div className="d-flex justify-content-center pb-5">
-                <button className='mt-3 btn btn-outline-primary w-50 btn-block '>Save And Continue</button>
-
+                {/* <button className='mt-3 btn btn-outline-primary w-50 btn-block '>Save And Continue</button> */}
+                <Button shape='round' disabled={loading || uploading} type="primary" size="large" onClick={handleSubmit} loading={loading}>
+                    {loading ? "Saving..." : "Save and Countinue"}
+                </Button>
             </div>
         </form>
     )
