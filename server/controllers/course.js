@@ -138,3 +138,29 @@ exports.createCourse = async (req, res) => {
         })
     }
 }
+
+
+exports.getInstructorCourses = async (req, res) => {
+    try {
+        const { _id } = req.user;
+        const user = await User.findById({ _id })
+        if (!user) {
+            return res.json({
+                sucess: true,
+                msg: "No user found"
+            })
+        }
+
+        const courses = await Course.findById({ instructor: _id })
+        res.json({
+            success: true,
+            data: courses
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
