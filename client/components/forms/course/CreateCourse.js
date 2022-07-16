@@ -9,7 +9,7 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
         children.push(<Option key={i.toFixed(2)}>${i.toFixed(2)}</Option>)
     }
 
-    const { name, loading, uploading, paid, description, imagePreview, price } = state
+    const { name, loading, uploading, paid, description, imagePreview, price, level } = state
 
     return (
         <form onSubmit={handleSubmit}>
@@ -52,6 +52,21 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
                 }
             </div>
 
+            <div className="form-group mt-3">
+                <Select
+                    name="level"
+                    style={{ width: '100%' }}
+                    value={level}
+                    onChange={(v) => setState({ ...state, level: v })}
+                >
+
+                    <Option value="Beginner"></Option>
+                    <Option value="Intermediate"></Option>
+                    <Option value="Advance"></Option>
+                    <Option value="All levels"></Option>
+                </Select>
+            </div>
+
             <div className="d-flex w-0">
                 <div className="form-group d-flex">
                     <label className='btn btn-primary mt-3'>
@@ -67,6 +82,7 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
                     </div>
                 }
             </div>
+
             <div className="d-flex justify-content-center pb-5">
                 {/* <button className='mt-3 btn btn-outline-primary w-50 btn-block '>Save And Continue</button> */}
                 <Button shape='round' disabled={loading || uploading} type="primary" size="large" onClick={handleSubmit} loading={loading}>

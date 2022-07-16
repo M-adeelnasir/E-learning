@@ -19,6 +19,7 @@ const Create = () => {
         paid: true,
         description: "",
         price: "",
+        level: "Beginner"
     })
     const [preview, setPriview] = useState("")
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")

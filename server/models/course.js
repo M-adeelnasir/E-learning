@@ -39,6 +39,10 @@ const courseSchema = mongoose.Schema({
         required: true,
         lowercase: true
     },
+    level: {
+        type: String,
+        required: true,
+    },
     description: {
         type: {},
         min: 6,

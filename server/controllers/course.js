@@ -95,7 +95,7 @@ exports.removeImage = async (req, res) => {
 exports.createCourse = async (req, res) => {
     try {
         console.log(req.body);
-        const { name, description, price, paid, image } = req.body;
+        const { name, description, price, paid, image, level } = req.body;
         const _id = req.user;
 
 
@@ -120,7 +120,7 @@ exports.createCourse = async (req, res) => {
 
         try {
             const course = await Course.create({
-                name, description, price, paid, image, slug: slugify(name), instructor: user._id
+                name, level, description, price, paid, image, slug: slugify(name), instructor: user._id
             })
             console.log(course)
             res.json({
@@ -128,7 +128,7 @@ exports.createCourse = async (req, res) => {
                 data: course
             })
         } catch (err) {
-            consol.log("HIT==>", err)
+            console.log("HIT==>", err)
         }
     } catch (err) {
         console.log(err)
