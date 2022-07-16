@@ -14,3 +14,7 @@ export const addCourse = async (state, image) => {
         image
     })
 }
+
+export const getAllCourses = async () => {
+    return await axios.get('/api/v1/instructor/courses')
+}

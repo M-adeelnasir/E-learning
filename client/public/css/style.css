@@ -12,3 +12,6 @@
 .hr-hieght {
   height: 100vh !important;
 }
+hr {
+  height: 1px !important;
+}

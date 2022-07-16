@@ -3,6 +3,7 @@ var { nanoid } = require("nanoid");
 const User = require('../models/user')
 const Course = require('../models/course')
 const slugify = require('slugify');
+const mongoose = require('mongoose')
 
 
 
@@ -151,7 +152,9 @@ exports.getInstructorCourses = async (req, res) => {
             })
         }
 
-        const courses = await Course.findById({ instructor: _id })
+
+        const courses = await Course.find({ instructor: _id })
+
         res.json({
             success: true,
             data: courses
