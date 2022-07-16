@@ -153,7 +153,7 @@ exports.getInstructorCourses = async (req, res) => {
         }
 
 
-        const courses = await Course.find({ instructor: _id })
+        const courses = await Course.find({ instructor: _id }).sort({ createdAt: -1 })
 
         res.json({
             success: true,
@@ -172,7 +172,7 @@ exports.getInstructorCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
     try {
         const slug = req.params;
-        const course = await Course.findOne({ slug })
+        const course = await Course.findOne(slug).populate("instructor", "name _id")
         if (!course) {
             return res.status(404).json({
                 success: false,

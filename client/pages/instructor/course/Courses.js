@@ -35,7 +35,7 @@ const Courses = () => {
 
                     {courses.map((course) =>
                         <div key={course._id}>
-                            <Link href={`/course/view/${course.slug}`}>
+                            <Link href={`/instructor/course/view/${course.slug}`}>
 
                                 <a >
                                     <div className='d-flex mt-3' >
