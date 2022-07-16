@@ -28,7 +28,7 @@ const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage
                             name="paid"
                             style={{ width: '100%' }}
                             value={paid}
-                            onChange={(v) => setState({ ...state, paid: !paid })}
+                            onChange={(v) => setState({ ...state, paid: v, price: 0 })}
                             size='large'
                         >
                             <Option value={true}>Paid</Option>

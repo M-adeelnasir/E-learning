@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import TopNav from '../../../components/TopNav'
 import UserNav from '../../../components/nav/UserNav'
 import Resizer from "react-image-file-resizer";
@@ -7,6 +8,7 @@ import CreateCourse from '../../../components/forms/course/CreateCourse'
 import { toast } from 'react-toastify';
 import InstructorRoute from '../../../components/routes/InstructorRoute'
 import { removeImage } from '../../../requests/course';
+import { addCourse } from '../../../requests/course';
 
 const Create = () => {
 
@@ -22,9 +24,22 @@ const Create = () => {
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")
     const [image, setImage] = useState({})
 
+    const router = useRouter()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        try {
+            const { data } = await addCourse(state, image)
+            console.log(data)
+            toast("Welcome To New Course!")
+            router.push('/instructor')
+        } catch (err) {
+            console.log(err)
+            toast("Course Failed To Create")
+
+        }
+
     }
 
     const handleChange = (e) => {

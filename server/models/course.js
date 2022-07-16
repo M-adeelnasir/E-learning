@@ -20,13 +20,13 @@ const lessonSchema = new mongoose.Schema({
     },
     video_link: {},
     free_preview: {
-        type: Bolean,
+        type: Boolean,
         default: false
     }
 }, { timestamps: true })
 
 
-const courseSchema = new mongoose.Schema({
+const courseSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -53,12 +53,12 @@ const courseSchema = new mongoose.Schema({
         type: String,
     },
     published: {
-        type: Bolean,
+        type: Boolean,
         default: false
     }
     ,
     paid: {
-        type: Bolean,
+        type: Boolean,
         default: true
     },
     instructor: {
@@ -73,4 +73,5 @@ const courseSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
-exports.module = mongoose.Model("Course", courseSchema)
+// exports.module = mongoose.model()
+module.exports = Course = mongoose.model("Course", courseSchema)

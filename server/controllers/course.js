@@ -1,5 +1,8 @@
 const AWS = require('aws-sdk')
 var { nanoid } = require("nanoid");
+const User = require('../models/user')
+const Course = require('../models/course')
+const slugify = require('slugify');
 
 
 
@@ -89,4 +92,49 @@ exports.removeImage = async (req, res) => {
 }
 
 
-// rajuu
+exports.createCourse = async (req, res) => {
+    try {
+        console.log(req.body);
+        const { name, description, price, paid, image } = req.body;
+        const _id = req.user;
+
+
+
+        const user = await User.findById(_id)
+
+        if (!user) {
+            return res.json({
+                sucess: true,
+                msg: "No user found"
+            })
+        }
+
+        const courseExists = await Course.findOne({ slug: slugify(name).toLowerCase() })
+
+        if (courseExists) {
+            return res.json({
+                success: false,
+                msg: "Name Already Taken"
+            })
+        }
+
+        try {
+            const course = await Course.create({
+                name, description, price, paid, image, slug: slugify(name), instructor: user._id
+            })
+            console.log(course)
+            res.json({
+                success: true,
+                data: course
+            })
+        } catch (err) {
+            consol.log("HIT==>", err)
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
