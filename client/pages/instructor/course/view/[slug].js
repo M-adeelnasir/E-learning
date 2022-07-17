@@ -10,6 +10,7 @@ import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import AddLesson from '../../../../components/forms/course/AddLesson'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { addLesson } from '../../../../requests/course'
 
 
 const Course = () => {
@@ -23,7 +24,7 @@ const Course = () => {
         uploading: false,
     })
 
-    const { video } = values
+    const { video, title, content } = values
 
     const [videoUploadText, setVideoUploadText] = useState("Upload Video")
     const [progress, setProgress] = useState(0)
@@ -67,7 +68,19 @@ const Course = () => {
 
 
     const handleAddLesson = async () => {
-        console.log(values, null, 4);
+        setValues({ ...values, uploading: true })
+
+        try {
+            const { data } = await addLesson(video.data, title, content, course.instructor._id, course.slug)
+            setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
+            setVideoUploadText("Upload Video")
+            setProgress(0)
+            toast("Lesson added")
+        } catch (err) {
+            console.log(err)
+            setValues({ ...values, uploading: false })
+            toast("Lesson add failed")
+        }
     }
 
     const handleFile = async (e) => {
@@ -98,7 +111,6 @@ const Course = () => {
 
     const handleRemove = async () => {
         try {
-            console.log("====>", video.data);
             setProgress(0)
             setValues({ ...values, uploading: true })
 

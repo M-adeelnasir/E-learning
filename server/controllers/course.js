@@ -237,7 +237,7 @@ exports.uploadVideo = async (req, res) => {
     }
 }
 
-exports.removeVieo = async (req, res) => {
+exports.removeVideo = async (req, res) => {
     try {
         const { instructorId } = req.params
         if (req.user._id !== instructorId) return res.sendStatus(400)
@@ -261,6 +261,43 @@ exports.removeVieo = async (req, res) => {
                 data
             })
         })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+exports.addLesson = async (req, res) => {
+    try {
+        const { slug, instructorId } = req.params
+        const { video, title, content } = req.body
+
+        const course = await Course.findOneAndUpdate({ slug },
+            {
+                $push: { lessons: { video, title, content, slug: slugify(title) } }
+            },
+            { new: true, runValidators: true }
+        )
+        if (!course) {
+            return res.json({
+                sucess: true,
+                msg: "Add lesson failed"
+            })
+        }
+
+        console.log(course)
+
+        res.json({
+            success: true,
+            data: course
+        })
+
 
 
     } catch (err) {

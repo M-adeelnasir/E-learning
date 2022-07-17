@@ -21,3 +21,7 @@ export const getAllCourses = async () => {
 export const getCourse = async (slug) => {
     return await axios.get(`/api/v1/course/${slug}`)
 }
+
+export const addLesson = async (video, title, content, slug, instructorId) => {
+    return await axios.post(`/api/v1/course/add-lesson/${instructorId}/${slug}`, { video, title, content })
+}
