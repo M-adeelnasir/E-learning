@@ -7,12 +7,19 @@ import { getCourse } from '../../../../requests/course'
 import UserNav from '../../../../components/nav/UserNav'
 import TopNav from '../../../../components/TopNav'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
+import AddLesson from '../../../../components/forms/course/AddLesson'
 
 
 const Course = () => {
     const [course, setCourse] = useState({})
     const [ok, setOk] = useState(false)
     const [isVisible, setIsvisible] = useState(false)
+    const [values, setValues] = useState({
+        title: "",
+        content: "",
+        video: "",
+        uploading: false,
+    })
 
     const router = useRouter()
 
@@ -51,6 +58,13 @@ const Course = () => {
     };
 
 
+    const handleAddLesson = async () => {
+        console.log(values, null, 4);
+    }
+
+    const handleFile = async () => {
+
+    }
 
 
 
@@ -115,7 +129,7 @@ const Course = () => {
                             footer={null}
                         >
 
-
+                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} />
                         </Modal>
 
 
