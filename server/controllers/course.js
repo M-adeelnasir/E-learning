@@ -199,6 +199,9 @@ exports.getCourse = async (req, res) => {
 
 exports.uploadVideo = async (req, res) => {
     try {
+        const { instructorId } = req.params
+
+        if (req.user._id !== instructorId) return res.sendStatus(400)
         const { video } = req.files
 
         if (!video) return res.status(400).json({ success: false })
@@ -236,6 +239,9 @@ exports.uploadVideo = async (req, res) => {
 
 exports.removeVieo = async (req, res) => {
     try {
+        const { instructorId } = req.params
+        if (req.user._id !== instructorId) return res.sendStatus(400)
+
         const { video } = req.body
         console.log(video)
 

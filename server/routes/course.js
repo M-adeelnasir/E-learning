@@ -11,8 +11,8 @@ router.post('/course/create', requireSignIn, checkInstructor, createCourse)
 router.get('/instructor/courses', requireSignIn, checkInstructor, getInstructorCourses)
 router.get('/instructor/courses', requireSignIn, checkInstructor, getInstructorCourses)
 router.get('/course/:slug', requireSignIn, checkInstructor, getCourse)
-router.post('/course/video-upload', requireSignIn, formidable(), uploadVideo)
-router.post('/course/video-remove', requireSignIn, removeVieo)
+router.post('/course/video-upload/:instructorId', requireSignIn, checkInstructor, formidable(), uploadVideo)
+router.post('/course/video-remove/:instructorId', requireSignIn, checkInstructor, removeVieo)
 
 
 

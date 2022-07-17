@@ -50,6 +50,7 @@ const Course = () => {
         if (router.isReady) {
             const slug = router.query.slug
             readCourse(slug)
+
         }
     }, [router.isReady])
 
@@ -78,7 +79,7 @@ const Course = () => {
             const videoData = new FormData()
             videoData.append("video", file)
 
-            const { data } = await axios.post('/api/v1/course/video-upload', videoData,
+            const { data } = await axios.post(`/api/v1/course/video-upload/${course.instructor._id}`, videoData,
                 {
                     onUploadProgress: (e) => {
                         setProgress(Math.round((100 * e.loaded) / e.total))
@@ -101,7 +102,7 @@ const Course = () => {
             setProgress(0)
             setValues({ ...values, uploading: true })
 
-            const { data } = await axios.post('/api/v1/course/video-remove', { video: video.data })
+            const { data } = await axios.post(`/api/v1/course/video-remove/${course.instructor._id}`, { video: video.data })
             console.log(data);
 
             setValues({ ...values, uploading: false, video: {} })
