@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Tooltip, Button, Modal } from 'antd'
+import { Avatar, Tooltip, Button, Modal, } from 'antd'
 import { EditOutlined, CheckOutlined, UploadOutlined } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
@@ -73,6 +73,7 @@ const Course = () => {
         try {
             const { data } = await addLesson(video.data, title, content, course.instructor._id, course.slug)
             setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
+            setCourse(data)
             setVideoUploadText("Upload Video")
             setProgress(0)
             toast("Lesson added")
@@ -129,7 +130,6 @@ const Course = () => {
     }
 
 
-
     return (
         <InstructorRoute>
             <div className="container-fluid d-flex flex-row p-0 ">
@@ -181,6 +181,19 @@ const Course = () => {
                             >
                                 <UploadOutlined /> Upload Lesson
                             </Button>
+                        </div>
+
+                        <div className='m-3'>
+                            <h4 >{course && course.lessons && course.lessons.length} lessons</h4>
+
+                            {
+                                course && course.lessons && course.lessons.map((lesson, i) =>
+                                    <div className='m-1' key={lesson._id}>
+                                        <span >{i + 1}.</span>
+                                        <span className="m-3">{lesson.title}</span>
+                                    </div>)
+                            }
+
                         </div>
 
                         <Modal
