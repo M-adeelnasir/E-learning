@@ -8,7 +8,7 @@ router.post('/remove/course-image', requireSignIn, checkInstructor, removeImage)
 router.post('/course/create', requireSignIn, checkInstructor, createCourse)
 router.get('/instructor/courses', requireSignIn, checkInstructor, getInstructorCourses)
 router.get('/instructor/courses', requireSignIn, checkInstructor, getInstructorCourses)
-router.get('/course/:slug', getCourse)
+router.get('/course/:slug', requireSignIn, checkInstructor, getCourse)
 
 
 module.exports = router
