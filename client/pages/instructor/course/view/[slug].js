@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Tooltip, Button } from 'antd'
-import { EditOutlined, CheckOutlined } from '@ant-design/icons'
+import { Avatar, Tooltip, Button, Modal } from 'antd'
+import { EditOutlined, CheckOutlined, UploadOutlined } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
 import { getCourse } from '../../../../requests/course'
@@ -8,9 +8,11 @@ import UserNav from '../../../../components/nav/UserNav'
 import TopNav from '../../../../components/TopNav'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 
+
 const Course = () => {
     const [course, setCourse] = useState({})
     const [ok, setOk] = useState(false)
+    const [isVisible, setIsvisible] = useState(false)
 
     const router = useRouter()
 
@@ -38,6 +40,20 @@ const Course = () => {
     }, [router.isReady])
 
 
+
+
+
+    const showModal = async () => {
+        setIsvisible(true)
+    }
+    const handleCancel = () => {
+        setIsvisible(false)
+    };
+
+
+
+
+
     return (
         <InstructorRoute>
             <div className="container-fluid d-flex flex-row p-0 ">
@@ -49,7 +65,7 @@ const Course = () => {
 
 
 
-                    {ok && course !== null && <div className="container d-flex flex-column">
+                    {ok && course !== null && <div className="container d-flex flex-column w-100">
                         <div className=" justify-content-between d-flex mb-0">
                             <div className='d-flex m-4'>
                                 <div>
@@ -77,6 +93,32 @@ const Course = () => {
                         <div className="col-md-10 offset-md-1">
                             <ReactMarkdown children={course.description} />
                         </div>
+
+                        <div className="colalign-self-center w-50 m-auto mt-5 mr-3">
+                            <Button
+                                onClick={showModal}
+                                type="primary"
+                                block
+                                shape='round '
+                                size='large'
+
+                            >
+                                <UploadOutlined /> Upload Lesson
+                            </Button>
+                        </div>
+
+                        <Modal
+                            visible={isVisible}
+                            onCancel={handleCancel}
+                            title="Upload Lesson"
+                            centered
+                            footer={null}
+                        >
+
+
+                        </Modal>
+
+
                     </div>}
 
 
