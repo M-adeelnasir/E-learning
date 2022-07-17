@@ -3,7 +3,7 @@ import { Button } from 'antd'
 
 
 
-const AddLesson = ({ handleAddLesson, setValues, values, handleFile }) => {
+const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUploadText }) => {
     const { title, video, content, uploading } = values
     return (
         <form onSubmit={handleAddLesson} className="form-control">
@@ -36,8 +36,8 @@ const AddLesson = ({ handleAddLesson, setValues, values, handleFile }) => {
             <label
                 className='mt-3 form-control bg-dark text-white'
             >
-                <input type="file" onChange={handleFile} hidden />
-                Upload Video
+                <input type="file" onChange={handleFile} hidden accept="video/*" />
+                {videoUploadText}
             </label>
 
 

@@ -8,6 +8,7 @@ import UserNav from '../../../../components/nav/UserNav'
 import TopNav from '../../../../components/TopNav'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import AddLesson from '../../../../components/forms/course/AddLesson'
+import axios from 'axios'
 
 
 const Course = () => {
@@ -17,9 +18,12 @@ const Course = () => {
     const [values, setValues] = useState({
         title: "",
         content: "",
-        video: "",
+        video: {},
         uploading: false,
     })
+
+    const [videoUploadText, setVideoUploadText] = useState("Upload Video")
+    const [progress, setProgress] = useState(0)
 
     const router = useRouter()
 
@@ -62,7 +66,33 @@ const Course = () => {
         console.log(values, null, 4);
     }
 
-    const handleFile = async () => {
+    const handleFile = async (e) => {
+        try {
+            const file = e.target.files[0]
+            setVideoUploadText(file.name)
+            setValues({ ...values, uploading: true })
+
+            const videoData = new FormData()
+            videoData.append("video", file)
+
+            const { data } = await axios.post('/api/v1/course/video-upload', { videoData },
+                {
+                    onUploadProgress: (e) => {
+                        setProgress(Math.round((100 * e.loaded) / e.total))
+
+                    }
+                }
+            )
+            console.log(data);
+            setValues({ ...values, video: data, uploading: false })
+
+        } catch (err) {
+            console.log(err);
+            setValues({ ...values, uploading: false })
+
+
+        }
+
 
     }
 
@@ -129,7 +159,7 @@ const Course = () => {
                             footer={null}
                         >
 
-                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} />
+                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} videoUploadText={videoUploadText} />
                         </Modal>
 
 
