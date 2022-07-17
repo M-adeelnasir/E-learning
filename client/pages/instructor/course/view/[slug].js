@@ -89,8 +89,6 @@ const Course = () => {
         } catch (err) {
             console.log(err);
             setValues({ ...values, uploading: false })
-
-
         }
 
 
@@ -157,9 +155,10 @@ const Course = () => {
                             title="Upload Lesson"
                             centered
                             footer={null}
+                            width={700}
                         >
 
-                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} videoUploadText={videoUploadText} />
+                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} />
                         </Modal>
 
 

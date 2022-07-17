@@ -199,7 +199,6 @@ exports.getCourse = async (req, res) => {
 
 exports.uploadVideo = async (req, res) => {
     try {
-        // console.log(req.files)
         const { video } = req.files
 
         if (!video) return res.status(400).json({ success: false })

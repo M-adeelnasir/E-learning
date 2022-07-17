@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Button } from 'antd'
+import { Button, Avatar, Tooltip, Progress } from 'antd'
+import { CloseCircleOutlined } from '@ant-design/icons'
 
 
 
-const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUploadText }) => {
+const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUploadText, progress }) => {
     const { title, video, content, uploading } = values
     return (
         <form onSubmit={handleAddLesson} className="form-control">
@@ -33,12 +34,33 @@ const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUpload
             </textarea>
 
 
-            <label
-                className='mt-3 form-control bg-dark text-white'
-            >
-                <input type="file" onChange={handleFile} hidden accept="video/*" />
-                {videoUploadText}
-            </label>
+            <div className="d-flex">
+                <label
+                    className='mt-3 form-control bg-dark text-white'
+                >
+                    <input type="file" onChange={handleFile} hidden accept="video/*" />
+                    {videoUploadText}
+                </label>
+
+                {!uploading && video.Location && <div className='p-2 align-self-center'>
+                    <Tooltip title="Remove">
+                        <Avatar size={30} className="bg-white">
+                            <CloseCircleOutlined className='text-danger ' />
+                        </Avatar>
+                    </Tooltip>
+                </div>}
+            </div>
+
+            {progress > 0 &&
+                (< Progress
+                    strokeColor={{
+                        from: '#108ee9',
+                        to: '#87d068',
+                    }}
+                    percent={progress}
+                    status="active"
+                />)}
+
 
 
             <Button
