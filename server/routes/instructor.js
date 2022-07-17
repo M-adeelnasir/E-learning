@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 const { requireSignIn, checkInstructor, checkAdmin, checkAuth } = require('../middleware/auth')
 const { makeInstructor, currentInstructor } = require('../controllers/instructor')
 

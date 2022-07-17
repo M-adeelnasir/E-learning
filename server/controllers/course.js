@@ -4,6 +4,7 @@ const User = require('../models/user')
 const Course = require('../models/course')
 const slugify = require('slugify');
 const mongoose = require('mongoose')
+const fs = require('fs')
 
 
 
@@ -183,6 +184,48 @@ exports.getCourse = async (req, res) => {
             success: true,
             data: course
         })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+//video upload
+
+
+exports.uploadVideo = async (req, res) => {
+    try {
+        // console.log(req.files)
+        const { video } = req.files
+
+        if (!video) return res.status(400).json({ success: false })
+
+        const type = video.type.split('/')[1]
+
+        const params = {
+            Bucket: "elearing",
+            Key: `video/${nanoid()}/${type}`,
+            Body: fs.readFileSync(video.path),
+            ACL: 'public-read',
+            ContentType: `video/${type}`
+
+        }
+
+        s3.upload(params, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.sendStatus(400)
+            }
+            res.json({
+                success: true,
+                data
+            })
+        })
+
     } catch (err) {
         console.log(err)
         res.status(500).json({

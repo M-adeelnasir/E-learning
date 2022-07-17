@@ -75,7 +75,7 @@ const Course = () => {
             const videoData = new FormData()
             videoData.append("video", file)
 
-            const { data } = await axios.post('/api/v1/course/video-upload', { videoData },
+            const { data } = await axios.post('/api/v1/course/video-upload', videoData,
                 {
                     onUploadProgress: (e) => {
                         setProgress(Math.round((100 * e.loaded) / e.total))
