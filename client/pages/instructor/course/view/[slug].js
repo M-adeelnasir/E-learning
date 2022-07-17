@@ -110,6 +110,8 @@ const Course = () => {
         } catch (err) {
             console.log(err);
             toast("Video remove failed")
+            setValues({ ...values, uploading: false, })
+
         }
     }
 

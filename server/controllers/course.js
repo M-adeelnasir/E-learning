@@ -233,3 +233,35 @@ exports.uploadVideo = async (req, res) => {
         })
     }
 }
+
+exports.removeVieo = async (req, res) => {
+    try {
+        const { video } = req.body
+        console.log(video)
+
+        const { Bucket, Key } = video;
+        const params = {
+            Bucket,
+            Key
+        }
+
+        s3.deleteObject(params, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.sendStatus(400)
+            }
+            res.json({
+                success: true,
+                data
+            })
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
