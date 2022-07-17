@@ -9,6 +9,7 @@ import TopNav from '../../../../components/TopNav'
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import AddLesson from '../../../../components/forms/course/AddLesson'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 const Course = () => {
@@ -21,6 +22,8 @@ const Course = () => {
         video: {},
         uploading: false,
     })
+
+    const { video } = values
 
     const [videoUploadText, setVideoUploadText] = useState("Upload Video")
     const [progress, setProgress] = useState(0)
@@ -90,8 +93,24 @@ const Course = () => {
             console.log(err);
             setValues({ ...values, uploading: false })
         }
+    }
 
+    const handleRemove = async () => {
+        try {
+            console.log("====>", video.data);
+            setProgress(0)
+            setValues({ ...values, uploading: true })
 
+            const { data } = await axios.post('/api/v1/course/video-remove', { video: video.data })
+            console.log(data);
+
+            setValues({ ...values, uploading: false, video: {} })
+            setVideoUploadText("Upload another video")
+
+        } catch (err) {
+            console.log(err);
+            toast("Video remove failed")
+        }
     }
 
 
@@ -158,7 +177,7 @@ const Course = () => {
                             width={700}
                         >
 
-                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} />
+                            <AddLesson values={values} setValues={setValues} handleAddLesson={handleAddLesson} handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} />
                         </Modal>
 
 

@@ -4,7 +4,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 
 
 
-const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUploadText, progress }) => {
+const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUploadText, progress, handleRemove }) => {
     const { title, video, content, uploading } = values
     return (
         <form onSubmit={handleAddLesson} className="form-control">
@@ -42,11 +42,9 @@ const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUpload
                     {videoUploadText}
                 </label>
 
-                {!uploading && video.Location && <div className='p-2 align-self-center'>
+                {!uploading && video.data && <div className='p-2 align-self-center'>
                     <Tooltip title="Remove">
-                        <Avatar size={30} className="bg-white">
-                            <CloseCircleOutlined className='text-danger ' />
-                        </Avatar>
+                        <CloseCircleOutlined className='text-danger ' onClick={handleRemove} />
                     </Tooltip>
                 </div>}
             </div>
