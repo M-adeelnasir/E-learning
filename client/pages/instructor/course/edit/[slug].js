@@ -23,7 +23,8 @@ const Create = () => {
         paid: true,
         description: "",
         price: "",
-        level: "Beginner"
+        level: "Beginner",
+        lessons: []
     })
     const [preview, setPriview] = useState("")
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")
@@ -114,6 +115,36 @@ const Create = () => {
     }
 
 
+
+    //drag able list
+
+    const handleDragStart = (e, index) => {
+        // console.log("ON DRAG", e, index);
+        e.dataTransfer.setData("itemIndex", index)
+    }
+    const handleDragOver = async (e, index) => {
+        // console.log("ON DRAG OVER", e, index);
+
+        const movingItemIndex = e.dataTransfer.getData("itemIndex")
+        const targetItemIndex = index
+
+        let allLessons = state.lessons
+
+        let movingItem = allLessons[movingItemIndex]
+        allLessons.splice(movingItemIndex, 1)
+        allLessons.splice(targetItemIndex, 0, movingItem)
+
+        setState({ ...state, lessons: [...allLessons] })
+
+        await updateCourse(state, image)
+        toast("Lesson update")
+
+    }
+
+
+
+
+
     return (
         <>
 
@@ -129,10 +160,21 @@ const Create = () => {
                         <div className="container-fluid ">
                             <h1>Course Details</h1>
                             <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} handleImageReomve={handleImageReomve} edit={true} />
+
+
+
+
+                            <h4>{state && state.lessons && state.lessons.length} Lesson</h4>
+
                             <List className='mt-3 mb-3'
+                                onDragOver={(e) => e.preventDefault()}
                                 dataSource={state.lessons}
                                 renderItem={(item, index) => (
-                                    <Item>
+                                    <Item
+                                        draggable
+                                        onDragStart={(e) => handleDragStart(e, index)}
+                                        onDrop={(e) => handleDragOver(e, index)}
+                                    >
                                         <Item.Meta
                                             avatar={<Avatar>{index + 1}</Avatar>}
                                             title={item.title}
@@ -143,6 +185,8 @@ const Create = () => {
                                 )}
                             >
                             </List>
+
+
                         </div>
                     </div>
                 </div>
