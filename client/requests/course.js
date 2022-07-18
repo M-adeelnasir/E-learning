@@ -25,3 +25,8 @@ export const getCourse = async (slug) => {
 export const addLesson = async (video, title, content, slug, instructorId) => {
     return await axios.post(`/api/v1/course/add-lesson/${instructorId}/${slug}`, { video, title, content })
 }
+
+
+export const updateCourse = async (state, image) => {
+    return await axios.put(`/api/v1/course/${state.slug}`, { ...state, image })
+}

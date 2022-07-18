@@ -40,7 +40,7 @@ const Courses = () => {
                                 <a >
                                     <div className='d-flex mt-3' >
                                         <div className=''>
-                                            <img style={{ heigth: "128px", }} src={course.image.Location} alt="" />
+                                            <img style={{ heigth: "128px", }} src={course.image && course.image.Location} alt="" />
 
                                         </div>
                                         <div className='d-flex justify-content-between w-100'>

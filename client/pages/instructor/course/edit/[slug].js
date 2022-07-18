@@ -11,6 +11,7 @@ import { removeImage } from '../../../../requests/course';
 import { addCourse } from '../../../../requests/course';
 import { getCourse } from '../../../../requests/course';
 import axios from 'axios';
+import { updateCourse } from '../../../../requests/course';
 
 const Create = () => {
 
@@ -34,7 +35,7 @@ const Create = () => {
         e.preventDefault()
 
         try {
-            const { data } = await axios.put(`/api/v1/course/${state.slug}`, { ...state, image })
+            const { data } = await updateCourse(state, image)
             console.log(data)
             toast("Welcome To New Course!")
         } catch (err) {
@@ -100,6 +101,7 @@ const Create = () => {
             const res = await removeImage(image)
             setImage({})
             setPriview("")
+            await updateCourse(state, image)
             setState({ ...state, loading: false })
             setUploadBtnText("Upload Image")
 

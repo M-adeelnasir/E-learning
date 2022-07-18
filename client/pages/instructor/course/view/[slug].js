@@ -146,7 +146,7 @@ const Course = () => {
                         <div className=" justify-content-between d-flex mb-0">
                             <div className='d-flex m-4'>
                                 <div>
-                                    <Avatar className='' shape='round' size={120} src={course.image.Location} />
+                                    <Avatar className='' shape='round' size={120} src={course.image && course.image.Location} />
 
                                 </div>
                                 <div className='d-flex flex-column mt-3' style={{ marginLeft: "15px" }}>
