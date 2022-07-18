@@ -335,3 +335,30 @@ exports.updateCourse = async (req, res) => {
         })
     }
 }
+
+
+exports.removeLesson = async (req, res) => {
+    try {
+
+        const { slug, lessonId } = req.params
+
+        const course = await Course.findOneAndUpdate({ slug }, {
+            $pull: { lessons: { _id: lessonId } }
+        })
+
+        if (course.instructor._id.toString() !== req.user._id) return res.sendStatus(400)
+
+
+        res.json({
+            success: true,
+            data: course
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}

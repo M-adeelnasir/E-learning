@@ -151,7 +151,7 @@ const Course = () => {
                                 </div>
                                 <div className='d-flex flex-column mt-3' style={{ marginLeft: "15px" }}>
                                     <h5 className='mb-0'>{course.name}</h5>
-                                    <p className='mb-0'>{course.lessons.length} Lessons</p>
+                                    <p className='mb-0'>{course && course.lessons && course.lessons.length} Lessons</p>
                                 </div>
 
 

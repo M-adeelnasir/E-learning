@@ -41,10 +41,10 @@ const Create = () => {
         try {
             const { data } = await updateCourse(state, image)
             console.log(data)
-            toast("Welcome To New Course!")
+            toast("Course Updated!")
         } catch (err) {
             console.log(err)
-            toast("Course Failed To Create")
+            toast("Course Failed To Update")
 
         }
 
@@ -123,9 +123,11 @@ const Create = () => {
         try {
             const { data } = await deleteLesson(router.query.slug, lessonId)
             console.log(data);
-            // setState({...state,lessons:})
+            setState({ ...state, lessons: data.data.lessons })
+            toast("Lesson deleted")
         } catch (err) {
             console.log(err);
+            toast("Lesson Delete Failed! try later")
         }
     }
 
@@ -156,7 +158,7 @@ const Create = () => {
         setState({ ...state, lessons: [...allLessons] })
 
         await updateCourse(state, image)
-        toast("Lesson update")
+        toast("Lesson updated")
 
     }
 
