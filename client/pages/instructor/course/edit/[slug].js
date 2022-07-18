@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Avatar, List } from 'antd';
+import { Avatar, List, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons'
 import TopNav from '../../../../components/TopNav';
 import UserNav from '../../../../components/nav/UserNav';
 import Resizer from "react-image-file-resizer";
@@ -11,6 +12,7 @@ import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import { removeImage } from '../../../../requests/course';
 import { getCourse } from '../../../../requests/course';
 import { updateCourse } from '../../../../requests/course';
+import { deleteLesson } from '../../../../requests/course';
 
 const { Item } = List
 
@@ -116,6 +118,23 @@ const Create = () => {
 
 
 
+
+    const handleDeletLesson = async (lessonId) => {
+        try {
+            const { data } = await deleteLesson(router.query.slug, lessonId)
+            console.log(data);
+            // setState({...state,lessons:})
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+
+
+
+
+
     //drag able list
 
     const handleDragStart = (e, index) => {
@@ -179,8 +198,16 @@ const Create = () => {
                                             avatar={<Avatar>{index + 1}</Avatar>}
                                             title={item.title}
                                         >
-
                                         </Item.Meta>
+
+                                        <Button
+                                            style={{ marginRight: '20px' }}
+                                            onClick={() => handleDeletLesson(item._id)}
+                                        >
+                                            <DeleteOutlined />
+                                        </Button>
+
+
                                     </Item>
                                 )}
                             >

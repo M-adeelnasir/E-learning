@@ -30,3 +30,7 @@ export const addLesson = async (video, title, content, slug, instructorId) => {
 export const updateCourse = async (state, image) => {
     return await axios.put(`/api/v1/course/${state.slug}`, { ...state, image })
 }
+
+export const deleteLesson = async (slug, lessonId) => {
+    return await axios.put(`/api/v1/course/lesson-remove/${slug}/${lessonId}`)
+}
