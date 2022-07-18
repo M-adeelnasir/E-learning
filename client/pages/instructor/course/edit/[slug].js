@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Avatar, List } from 'antd';
 import TopNav from '../../../../components/TopNav';
 import UserNav from '../../../../components/nav/UserNav';
 import Resizer from "react-image-file-resizer";
@@ -8,10 +9,10 @@ import CreateCourse from '../../../..//components/forms/course/CreateCourse'
 import { toast } from 'react-toastify';
 import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import { removeImage } from '../../../../requests/course';
-import { addCourse } from '../../../../requests/course';
 import { getCourse } from '../../../../requests/course';
-import axios from 'axios';
 import { updateCourse } from '../../../../requests/course';
+
+const { Item } = List
 
 const Create = () => {
 
@@ -128,9 +129,27 @@ const Create = () => {
                         <div className="container-fluid ">
                             <h1>Course Details</h1>
                             <CreateCourse setState={setState} state={state} handleChange={handleChange} handleSubmit={handleSubmit} handleImage={handleImage} preview={preview} uploadBtnText={uploadBtnText} handleImageReomve={handleImageReomve} edit={true} />
+                            <List className='mt-3 mb-3'
+                                dataSource={state.lessons}
+                                renderItem={(item, index) => (
+                                    <Item>
+                                        <Item.Meta
+                                            avatar={<Avatar>{index + 1}</Avatar>}
+                                            title={item.title}
+                                        >
+
+                                        </Item.Meta>
+                                    </Item>
+                                )}
+                            >
+                            </List>
                         </div>
                     </div>
                 </div>
+
+
+
+
             </InstructorRoute>
 
         </>
