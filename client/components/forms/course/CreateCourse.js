@@ -2,7 +2,7 @@ import React from 'react'
 import { Select, Avatar, Button, Badge } from 'antd'
 
 const { Option } = Select
-const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText, handleImageReomve }) => {
+const CreateCourse = ({ setState, state, handleChange, handleSubmit, handleImage, preview, uploadBtnText, handleImageReomve, edit = false, }) => {
 
     const children = [];
     for (let i = 9.99; i <= 100.99; i++) {

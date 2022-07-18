@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Tooltip, Button, Modal, } from 'antd'
+import { Avatar, Tooltip, Button, Modal, List } from 'antd'
 import { EditOutlined, CheckOutlined, UploadOutlined } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { addLesson } from '../../../../requests/course'
 
+const { Item } = List
 
 const Course = () => {
     const [course, setCourse] = useState({})
@@ -157,10 +158,10 @@ const Course = () => {
                             </div>
                             <div className='m-4'>
                                 <Tooltip className='text-success m-3' placement="top" title="Publish">
-                                    <Button><CheckOutlined /></Button>
+                                    <Button ><CheckOutlined /></Button>
                                 </Tooltip>
                                 <Tooltip className='text-info' placement="top" title="Edit">
-                                    <Button><EditOutlined /></Button>
+                                    <Button onClick={() => router.push(`/instructor/course/edit/${course.slug}`)}><EditOutlined /></Button>
                                 </Tooltip>
                             </div>
 
@@ -186,13 +187,30 @@ const Course = () => {
                         <div className='m-3'>
                             <h4 >{course && course.lessons && course.lessons.length} lessons</h4>
 
-                            {
+                            {/* {
                                 course && course.lessons && course.lessons.map((lesson, i) =>
                                     <div className='m-1' key={lesson._id}>
                                         <span >{i + 1}.</span>
                                         <span className="m-3">{lesson.title}</span>
                                     </div>)
-                            }
+                            } */}
+
+                            <List
+                                dataSource={course && course.lessons}
+                                renderItem={(item, index) => (
+                                    <Item>
+                                        <Item.Meta
+                                            avatar={<Avatar>{index + 1}</Avatar>}
+                                            title={item.title}
+                                        >
+
+                                        </Item.Meta>
+
+                                    </Item>
+                                )}
+                            >
+
+                            </List>
 
                         </div>
 
