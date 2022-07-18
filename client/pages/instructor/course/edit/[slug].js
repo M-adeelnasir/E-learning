@@ -10,6 +10,7 @@ import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import { removeImage } from '../../../../requests/course';
 import { addCourse } from '../../../../requests/course';
 import { getCourse } from '../../../../requests/course';
+import axios from 'axios';
 
 const Create = () => {
 
@@ -33,7 +34,7 @@ const Create = () => {
         e.preventDefault()
 
         try {
-            const { data } = await addCourse(state, image)
+            const { data } = await axios.put(`/api/v1/course/${state.slug}`, { ...state, image })
             console.log(data)
             toast("Welcome To New Course!")
         } catch (err) {

@@ -1,7 +1,7 @@
 const expressJwt = require('express-jwt')
 const User = require('../models/user')
 
-exports.requireSignIn = expressJwt({ getToken: (req, res) => { console.log("cookie token", req.cookies.token); return req.cookies.token }, secret: process.env.JWT_SECRET_KEY, algorithms: ['sha1', 'RS256', 'HS256'] })
+exports.requireSignIn = expressJwt({ getToken: (req, res) => { return req.cookies.token }, secret: process.env.JWT_SECRET_KEY, algorithms: ['sha1', 'RS256', 'HS256'] })
 
 
 exports.checkAuth = async (req, res, next) => {
