@@ -74,7 +74,7 @@ const Course = () => {
         try {
             const { data } = await addLesson(video.data, title, content, course.instructor._id, course.slug)
             setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
-            setCourse(data)
+            setCourse(data.data)
             setVideoUploadText("Upload Video")
             setProgress(0)
             toast("Lesson added")

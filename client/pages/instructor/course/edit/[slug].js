@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Avatar, List, Button } from 'antd';
+import { Avatar, List, Button, Modal } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons'
 import TopNav from '../../../../components/TopNav';
 import UserNav from '../../../../components/nav/UserNav';
@@ -13,6 +13,7 @@ import { removeImage } from '../../../../requests/course';
 import { getCourse } from '../../../../requests/course';
 import { updateCourse } from '../../../../requests/course';
 import { deleteLesson } from '../../../../requests/course';
+import UpdateLesson from '../../../../components/forms/course/UpdateLesson';
 
 const { Item } = List
 
@@ -31,6 +32,14 @@ const Create = () => {
     const [preview, setPriview] = useState("")
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")
     const [image, setImage] = useState({})
+
+    //update lesson modal states
+    const [visible, setVisible] = useState(false)
+    const [progress, setProgress] = useState(0)
+    const [videoUploadText, setVideoUploadText] = useState("Video.mp4")
+    const [current, setCurrent] = useState({})
+    const [uploading, setUploading] = useState(false)
+
 
 
     const router = useRouter()
@@ -164,6 +173,29 @@ const Create = () => {
 
 
 
+    //update lesson modal functions
+
+    const handleModal = async (item) => {
+        setVisible(true)
+        setCurrent(item)
+        console.log(item)
+
+    }
+
+    const handleUpdate = async () => {
+        console.log("Submit")
+    }
+
+    const handleFile = () => {
+        console.log("Handel file")
+
+    }
+
+    const handleRemove = () => {
+        console.log("hanlde remove")
+    }
+
+
 
 
     return (
@@ -197,8 +229,9 @@ const Create = () => {
                                         onDrop={(e) => handleDragOver(e, index)}
                                     >
                                         <Item.Meta
-                                            avatar={<Avatar>{index + 1}</Avatar>}
-                                            title={item.title}
+                                            avatar={<Avatar style={{ cursor: 'grabbing' }}>{index + 1}</Avatar>}
+                                            title={<span style={{ cursor: 'pointer' }}>{item.title}</span>}
+                                            onClick={() => handleModal(item)}
                                         >
                                         </Item.Meta>
 
@@ -214,6 +247,17 @@ const Create = () => {
                                 )}
                             >
                             </List>
+
+                            <Modal
+                                title="Update Lesson"
+                                visible={visible}
+                                onCancel={() => setVisible(false)}
+                                footer={null}
+                            >
+
+                                <UpdateLesson handleUpdate={handleUpdate} setCurrent={setCurrent} current={current}
+                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} uploading={uploading} />
+                            </Modal>
 
 
                         </div>
