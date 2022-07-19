@@ -52,11 +52,13 @@ const Course = () => {
         if (router.isReady) {
             const slug = router.query.slug
             readCourse(slug)
-
         }
     }, [router.isReady])
 
 
+    useEffect(() => {
+
+    }, [course])
 
 
 

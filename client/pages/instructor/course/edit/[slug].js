@@ -16,6 +16,7 @@ import { deleteLesson } from '../../../../requests/course';
 import UpdateLesson from '../../../../components/forms/course/UpdateLesson';
 import axios from 'axios'
 
+
 const { Item } = List
 
 const Create = () => {
@@ -190,7 +191,6 @@ const Create = () => {
     }
 
     useEffect(() => {
-        console.log(video);
     }, [video])
 
 
@@ -201,7 +201,6 @@ const Create = () => {
             if (video && video.Location) {
                 handleRemove()
                 toast("Removed Success full")
-                console.log(video);
             }
 
 
@@ -242,12 +241,9 @@ const Create = () => {
 
             setVideo({})
 
-            console.log(setVideo({}));
-            console.log(video);
             setUpload(false)
             setVideoUploadText("Upload another video")
 
-            console.log(video)
 
         } catch (err) {
             console.log(err);
@@ -315,6 +311,7 @@ const Create = () => {
                                 visible={visible}
                                 onCancel={() => setVisible(false)}
                                 footer={null}
+                                width={700}
                             >
 
                                 <UpdateLesson handleUpdate={handleUpdate} setCurrent={setCurrent} current={current}

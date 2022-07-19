@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Avatar, Tooltip, Progress } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
+import ReactPlayer from 'react-player'
+
 
 
 
@@ -23,7 +25,7 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
 
 
             <textarea
-                className='form-control mt-3'
+                className='form-control mt-3 mb-3'
                 cols="7"
                 rows="7"
                 value={content}
@@ -34,6 +36,7 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
             >
             </textarea>
 
+            {video && video.Location && <ReactPlayer className="form-control mt-3 mb-3" controls width="640px" height="260px" url={video.Location} />}
 
 
             <div className="d-flex">
