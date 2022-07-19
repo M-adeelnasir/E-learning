@@ -41,7 +41,7 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
                     className='mt-3 form-control bg-dark text-white'
                 >
                     <input type="file" onChange={handleFile} hidden accept="video/*" />
-                    {videoUploadText}
+                    {!video ? "Upload Video" : videoUploadText}
                 </label>
 
 

@@ -82,6 +82,7 @@ const Create = () => {
         if (router.isReady) {
             courseValues(router.query.slug)
         }
+        // console.log(current);
     }, [router.isReady])
 
 
@@ -181,19 +182,30 @@ const Create = () => {
     const handleModal = async (item) => {
         setVisible(true)
         setCurrent(item)
-        console.log(item.video)
         setVideo(item.video)
-
-
     }
 
     const handleUpdate = async () => {
         console.log("Submit")
     }
 
+    useEffect(() => {
+        console.log(video);
+    }, [video])
+
+
 
     const handleFile = async (e) => {
         try {
+
+            if (video && video.Location) {
+                handleRemove()
+                toast("Removed Success full")
+                console.log(video);
+            }
+
+
+
             const file = e.target.files[0]
             setVideoUploadText(file.name)
             setUpload(true)
@@ -229,6 +241,9 @@ const Create = () => {
             console.log(data);
 
             setVideo({})
+
+            console.log(setVideo({}));
+            console.log(video);
             setUpload(false)
             setVideoUploadText("Upload another video")
 
