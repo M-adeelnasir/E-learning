@@ -387,7 +387,6 @@ exports.updateLesson = async (req, res) => {
         }, { new: true })
 
 
-        console.log(lesson)
         res.json({
             success: true,
             data: course

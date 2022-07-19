@@ -260,6 +260,16 @@ const Create = () => {
             toast("lesson updated")
             setVideoUploadText("Upload Video")
 
+            if (data.success) {
+                let arr = state.lessons;
+                const index = arr.findIndex((el) => el._id === current._id)
+                arr[index] = current
+
+                setState({ ...state, lessons: arr })
+
+
+            }
+
         } catch (err) {
             console.log(err);
         }
