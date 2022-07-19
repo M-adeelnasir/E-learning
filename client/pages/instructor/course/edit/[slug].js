@@ -43,7 +43,6 @@ const Create = () => {
     const [current, setCurrent] = useState({})
     const [upload, setUpload] = useState(false)
     const [video, setVideo] = useState({})
-    const [videoPreview, setVideoPreview] = useState(false)
 
 
 
@@ -182,14 +181,9 @@ const Create = () => {
     //update lesson modal functions
 
     const handleModal = async (item) => {
-        setVideoPreview(item.free_preview)
         setVisible(true)
         setCurrent(item)
         setVideo(item.video)
-    }
-
-    const handleUpdate = async () => {
-        console.log("Submit")
     }
 
     useEffect(() => {
@@ -257,6 +251,22 @@ const Create = () => {
 
 
 
+    const handleUpdate = async (e) => {
+        e.preventDefault()
+        try {
+            const { data } = await axios.post(`/api/v1/course/lesson-update/${router.query.slug}/${current._id}`, { ...current, video: video })
+            console.log(data)
+            setVisible(false)
+            toast("lesson updated")
+            setVideoUploadText("Upload Video")
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+
 
     return (
         <>
@@ -317,7 +327,7 @@ const Create = () => {
                             >
 
                                 <UpdateLesson handleUpdate={handleUpdate} setCurrent={setCurrent} current={current}
-                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} upload={upload} videoPreview={videoPreview} setVideoPreview={setVideoPreview} />
+                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} upload={upload} />
                             </Modal>
 
 

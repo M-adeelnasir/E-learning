@@ -316,6 +316,7 @@ exports.updateCourse = async (req, res) => {
     try {
         const { slug } = req.body
 
+        console.log(req.body)
         const course = await Course.findOneAndUpdate({ slug }, req.body, { new: true })
 
 
@@ -349,6 +350,44 @@ exports.removeLesson = async (req, res) => {
         if (course.instructor._id.toString() !== req.user._id) return res.sendStatus(400)
 
 
+        res.json({
+            success: true,
+            data: course
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+exports.updateLesson = async (req, res) => {
+    try {
+        const { slug: courseSlug, lessonId } = req.params
+        const { title, slug, content, video, free_preview, _id } = req.body
+
+
+
+        const course = await Course.findOne({ slug: courseSlug })
+
+        console.log(course)
+        if (course.instructor.toString() !== req.user._id) return res.sendStatus(400)
+
+        const lesson = await Course.updateOne({ "lessons._id": _id }, {
+            $set: {
+                "lessons.$.title": title,
+                "lessons.$.content": content,
+                "lessons.$.slug": slugify(title),
+                "lessons.$.free_preview": free_preview,
+                "lessons.$.video": video
+            }
+        }, { new: true })
+
+
+        console.log(lesson)
         res.json({
             success: true,
             data: course

@@ -6,8 +6,9 @@ import ReactPlayer from 'react-player'
 
 
 
-const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, upload, videoPreview, setVideoPreview }) => {
+const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, upload, }) => {
     const { title, video, content } = current
+
 
     return (
         <form onSubmit={handleUpdate} className="form-control">
@@ -43,7 +44,7 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
                 video.Location &&
                 <div className='d-flex justify-content-between'>
                     <div>Preview</div>
-                    <Switch defaultChecked={videoPreview} onChange={v => setVideoPreview(v)} />
+                    <Switch defaultChecked={current.free_preview} onChange={v => setCurrent({ ...current, free_preview: v })} />
                 </div>
             }
 
