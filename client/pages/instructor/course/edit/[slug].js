@@ -14,6 +14,7 @@ import { getCourse } from '../../../../requests/course';
 import { updateCourse } from '../../../../requests/course';
 import { deleteLesson } from '../../../../requests/course';
 import UpdateLesson from '../../../../components/forms/course/UpdateLesson';
+import axios from 'axios'
 
 const { Item } = List
 
@@ -27,8 +28,9 @@ const Create = () => {
         description: "",
         price: "",
         level: "Beginner",
-        lessons: []
+        lessons: [],
     })
+
     const [preview, setPriview] = useState("")
     const [uploadBtnText, setUploadBtnText] = useState("Upload Image")
     const [image, setImage] = useState({})
@@ -38,7 +40,8 @@ const Create = () => {
     const [progress, setProgress] = useState(0)
     const [videoUploadText, setVideoUploadText] = useState("Video.mp4")
     const [current, setCurrent] = useState({})
-    const [uploading, setUploading] = useState(false)
+    const [upload, setUpload] = useState(false)
+    const [video, setVideo] = useState({})
 
 
 
@@ -67,6 +70,7 @@ const Create = () => {
             setPriview(data.data.image.Location)
             setImage(data.data.image)
 
+
         } catch (err) {
             console.log(err);
 
@@ -79,7 +83,6 @@ const Create = () => {
             courseValues(router.query.slug)
         }
     }, [router.isReady])
-
 
 
 
@@ -103,7 +106,7 @@ const Create = () => {
         } catch (err) {
             setState({ ...state, loading: false })
             console.log(err);
-            toast("Image uploaf failed! try later")
+            toast("Image upload failed! try later")
         }
     }
 
@@ -131,7 +134,7 @@ const Create = () => {
     const handleDeletLesson = async (lessonId) => {
         try {
             const { data } = await deleteLesson(router.query.slug, lessonId)
-            console.log(data);
+            console.log(data.data.lessons);
             setState({ ...state, lessons: data.data.lessons })
             toast("Lesson deleted")
         } catch (err) {
@@ -178,7 +181,9 @@ const Create = () => {
     const handleModal = async (item) => {
         setVisible(true)
         setCurrent(item)
-        console.log(item)
+        console.log(item.video)
+        setVideo(item.video)
+
 
     }
 
@@ -186,13 +191,55 @@ const Create = () => {
         console.log("Submit")
     }
 
-    const handleFile = () => {
-        console.log("Handel file")
+
+    const handleFile = async (e) => {
+        try {
+            const file = e.target.files[0]
+            setVideoUploadText(file.name)
+            setUpload(true)
+
+            const videoData = new FormData()
+            videoData.append("video", file)
+
+            const { data } = await axios.post(`/api/v1/course/video-upload/${state.instructor._id}`, videoData,
+                {
+                    onUploadProgress: (e) => {
+                        setProgress(Math.round((100 * e.loaded) / e.total))
+
+                    }
+                }
+            )
+            console.log(data);
+            setCurrent({ ...current, video: data })
+            setUpload(false)
+
+        } catch (err) {
+            console.log(err);
+            setUpload(false)
+        }
 
     }
 
-    const handleRemove = () => {
-        console.log("hanlde remove")
+    const handleRemove = async () => {
+        try {
+            setProgress(0)
+            setUpload(true)
+
+            const { data } = await axios.post(`/api/v1/course/video-remove/${state.instructor._id}`, { video: video })
+            console.log(data);
+
+            setVideo({})
+            setUpload(false)
+            setVideoUploadText("Upload another video")
+
+            console.log(video)
+
+        } catch (err) {
+            console.log(err);
+            toast("Video remove failed")
+            setUpload(false)
+
+        }
     }
 
 
@@ -256,7 +303,7 @@ const Create = () => {
                             >
 
                                 <UpdateLesson handleUpdate={handleUpdate} setCurrent={setCurrent} current={current}
-                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} uploading={uploading} />
+                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} upload={upload} />
                             </Modal>
 
 

@@ -4,7 +4,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 
 
 
-const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, uploading }) => {
+const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, upload }) => {
     const { title, video, content } = current
 
     return (
@@ -45,7 +45,7 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
                 </label>
 
 
-                {!uploading && video && <div className='p-2 align-self-center'>
+                {!upload && video && <div className='p-2 align-self-center'>
                     <Tooltip title="Remove">
                         <CloseCircleOutlined className='text-danger ' onClick={handleRemove} />
                     </Tooltip>
@@ -69,10 +69,10 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
                 className='mt-3 mb-2'
                 type='primary'
                 shape='round'
-                loading={uploading}
+                loading={upload}
                 onClick={handleUpdate}
             >
-                Save Lesson
+                Update Lesson
             </Button>
 
         </form>
