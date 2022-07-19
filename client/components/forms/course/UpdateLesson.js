@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { Button, Avatar, Tooltip, Progress } from 'antd'
+import React from 'react'
+import { Button, Tooltip, Progress, Switch } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player'
 
 
 
 
-const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, upload }) => {
+const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUploadText, progress, handleRemove, upload, videoPreview, setVideoPreview }) => {
     const { title, video, content } = current
 
     return (
@@ -37,6 +37,15 @@ const UpdateLesson = ({ handleUpdate, setCurrent, current, handleFile, videoUplo
             </textarea>
 
             {video && video.Location && <ReactPlayer className="form-control mt-3 mb-3" controls width="640px" height="260px" url={video.Location} />}
+
+
+            {video &&
+                video.Location &&
+                <div className='d-flex justify-content-between'>
+                    <div>Preview</div>
+                    <Switch defaultChecked={videoPreview} onChange={v => setVideoPreview(v)} />
+                </div>
+            }
 
 
             <div className="d-flex">

@@ -43,6 +43,7 @@ const Create = () => {
     const [current, setCurrent] = useState({})
     const [upload, setUpload] = useState(false)
     const [video, setVideo] = useState({})
+    const [videoPreview, setVideoPreview] = useState(false)
 
 
 
@@ -181,6 +182,7 @@ const Create = () => {
     //update lesson modal functions
 
     const handleModal = async (item) => {
+        setVideoPreview(item.free_preview)
         setVisible(true)
         setCurrent(item)
         setVideo(item.video)
@@ -315,7 +317,7 @@ const Create = () => {
                             >
 
                                 <UpdateLesson handleUpdate={handleUpdate} setCurrent={setCurrent} current={current}
-                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} upload={upload} />
+                                    handleFile={handleFile} videoUploadText={videoUploadText} progress={progress} handleRemove={handleRemove} upload={upload} videoPreview={videoPreview} setVideoPreview={setVideoPreview} />
                             </Modal>
 
 
