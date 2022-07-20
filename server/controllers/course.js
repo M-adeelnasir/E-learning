@@ -470,3 +470,25 @@ exports.courses = async (req, res) => {
         })
     }
 }
+
+
+exports.read = async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        const course = await Course.findOne({ slug }).populate("instructor", "name _id")
+
+        if (!course) return res.sendStatus(404)
+
+        res.json({
+            succcess: true,
+            data: course
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
