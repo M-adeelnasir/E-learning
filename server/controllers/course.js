@@ -278,6 +278,8 @@ exports.addLesson = async (req, res) => {
         const { slug, instructorId } = req.params
         const { video, title, content } = req.body
 
+        console.log(instructorId, req.user._id)
+
         if (req.user._id !== instructorId) return res.sendStatus(400)
 
         const course = await Course.findOneAndUpdate({ slug },

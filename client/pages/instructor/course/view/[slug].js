@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Tooltip, Button, Modal, List } from 'antd'
-import { EditOutlined, CheckOutlined, UploadOutlined } from '@ant-design/icons'
+import { EditOutlined, CheckOutlined, UploadOutlined, CloseOutlined } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
 import { getCourse } from '../../../../requests/course'
@@ -10,7 +10,7 @@ import InstructorRoute from '../../../../components/routes/InstructorRoute'
 import AddLesson from '../../../../components/forms/course/AddLesson'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { addLesson } from '../../../../requests/course'
+import { addLesson, courseUnpublish, coursePublish } from '../../../../requests/course'
 
 const { Item } = List
 
@@ -73,11 +73,15 @@ const Course = () => {
     const handleAddLesson = async () => {
         setValues({ ...values, uploading: true })
 
+        console.log(course.instructor._id)
+
         try {
+            console.log(course.instructor._id, course.slug)
             const { data } = await addLesson(video.data, title, content, course.instructor._id, course.slug)
             setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
             setCourse(data.data)
             setVideoUploadText("Upload Video")
+            setIsvisible(false)
             setProgress(0)
             toast("Lesson added")
         } catch (err) {
@@ -132,6 +136,28 @@ const Course = () => {
         }
     }
 
+    const handleUnpublish = async () => {
+        try {
+            const { data } = await courseUnpublish()
+            setCourse(data.data)
+            toast("Course Published")
+        } catch (err) {
+            toast("Course Published Failed")
+
+        }
+    }
+
+    const handlePublish = async () => {
+        try {
+            const { data } = await coursePublish()
+            setCourse(data.data)
+            toast("Course Unpublished")
+        } catch (err) {
+            toast("Course Unpublished Failed")
+
+        }
+    }
+
 
     return (
         <InstructorRoute>
@@ -159,12 +185,21 @@ const Course = () => {
 
                             </div>
                             <div className='m-4'>
-                                <Tooltip className='text-success m-3' placement="top" title="Publish">
-                                    <Button ><CheckOutlined /></Button>
-                                </Tooltip>
                                 <Tooltip className='text-info' placement="top" title="Edit">
                                     <Button onClick={() => router.push(`/instructor/course/edit/${course.slug}`)}><EditOutlined /></Button>
                                 </Tooltip>
+
+                                {course && course.lessons.length < 5 ?
+                                    (<span className='text-danger' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
+                                    course.publish ? <Tooltip className='text-success m-3' placement="top" title="Unpublish">
+                                        <Button onClick={handleUnpublish} ><CloseOutlined /></Button>
+                                    </Tooltip> :
+                                        (<Tooltip className='text-success m-3' placement="top" title="Pblish">
+                                            <Button onClick={handlePublish}><CheckOutlined /></Button>
+                                        </Tooltip>)
+                                }
+
+
                             </div>
 
                         </div>

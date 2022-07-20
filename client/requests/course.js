@@ -22,7 +22,7 @@ export const getCourse = async (slug) => {
     return await axios.get(`/api/v1/course/${slug}`)
 }
 
-export const addLesson = async (video, title, content, slug, instructorId) => {
+export const addLesson = async (video, title, content, instructorId, slug) => {
     return await axios.post(`/api/v1/course/add-lesson/${instructorId}/${slug}`, { video, title, content })
 }
 
@@ -33,4 +33,11 @@ export const updateCourse = async (state, image) => {
 
 export const deleteLesson = async (slug, lessonId) => {
     return await axios.put(`/api/v1/course/lesson-remove/${slug}/${lessonId}`)
+}
+
+export const coursePublish = async (courseId) => {
+    return await axios.put(`/api/v1/course/publish/${courseId}`)
+}
+export const courseUnpublish = async (courseId) => {
+    return await axios.put(`/api/v1/course/publish/${courseId}`)
 }
