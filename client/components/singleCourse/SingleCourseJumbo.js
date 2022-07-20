@@ -8,9 +8,9 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible })
     const { name, description, price, paid, instructor, updatedAt, image } = course
     return (
         <div className="jumbotron bg-primary grad">
-            <div className="container d-flex justify-content-between text-white">
-                <div className="col-md-6">
-                    <div className="d-flex flex-column pb-3 pt-3">
+            <div className="container d-flex justify-content-between text-white pb-5 pt-5">
+                <div className="col-md-6 ">
+                    <div className="d-flex flex-column">
                         {name && <h1 className="mb-2 text-white">{name}</h1>}
                         {description && <p className='mb-2'>{description.substr(0, 100)}...</p>}
                         <p className=''>Created By:  <span className='link'>{instructor.name}</span></p>

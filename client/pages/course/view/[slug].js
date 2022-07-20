@@ -3,6 +3,7 @@ import axios from 'axios'
 import TopNav from '../../../components/TopNav'
 import SingleCourseJumbo from '../../../components/singleCourse/SingleCourseJumbo'
 import CourseModal from '../../../components/singleCourse/CourseModal'
+import LessonsList from '../../../components/singleCourse/LessonsList'
 
 
 const Course = ({ course }) => {
@@ -21,17 +22,17 @@ const Course = ({ course }) => {
     return (
         <>
             <TopNav />
-            {!isSSR && <>
+            {!isSSR &&
 
-                <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} />
+                <>
+                    <div className="pt-3 pb-3">
+                        <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} />
 
-                <CourseModal visible={visible} setVisible={setVisible} course={course} preview={preview} />
+                        <CourseModal visible={visible} setVisible={setVisible} course={course} preview={preview} />
+                    </div>
 
-            </>
-
-
-
-
+                    <LessonsList course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} />
+                </>
             }
         </>
     )

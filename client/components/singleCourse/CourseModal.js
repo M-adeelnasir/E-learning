@@ -3,13 +3,16 @@ import { Modal } from 'antd'
 import ReactPlayer from 'react-player'
 
 
-const CourseModal = ({ course, visible, setVisible, preview }) => {
+const CourseModal = ({ course, visible, setVisible, preview, }) => {
     return (
         <>
             <Modal
                 title="Video Preview"
                 visible={visible}
-                onCancel={() => setVisible(!visible)}
+                onCancel={() => {
+                    setVisible(!visible)
+
+                }}
                 width={620}
                 footer={null}
 
@@ -17,7 +20,7 @@ const CourseModal = ({ course, visible, setVisible, preview }) => {
             >
                 <div className="wrapper">
                     <ReactPlayer
-                        url={course.lessons[0].video.Location}
+                        url={preview}
                         light={course.image.Location}
                         controls={true}
                         playing={visible}
