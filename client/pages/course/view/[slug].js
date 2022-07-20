@@ -11,9 +11,6 @@ const Course = ({ course }) => {
 
 
 
-    const { image } = course
-
-
     const [isSSR, setIsSSR] = useState(true)
 
     useEffect(() => {
@@ -28,7 +25,7 @@ const Course = ({ course }) => {
 
                 <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} />
 
-                <CourseModal visible={visible} setVisible={setVisible} course={course} />
+                <CourseModal visible={visible} setVisible={setVisible} course={course} preview={preview} />
 
             </>
 
