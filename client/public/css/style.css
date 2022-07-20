@@ -15,3 +15,7 @@
 hr {
   height: 1px !important;
 }
+
+.ant-card-body {
+  padding: 7px;
+}

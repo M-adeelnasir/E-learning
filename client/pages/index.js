@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TopNav from '../components/TopNav'
 import { allCourses } from '../requests/course';
+import Course from '../components/forms/course/Course';
 
 
 const Index = () => {
@@ -25,11 +26,18 @@ const Index = () => {
         <>
             <div className="cotainer-fluid">
                 <TopNav />
-                <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>E-Learning Management System</h1>
-                <div className='d-flex'>
-                    {courses && courses.map((course) => (
-                        <div className='col-md-4'>{JSON.stringify(course)}</div>
-                    ))}
+                <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>E-Learning Management System</h1>
+
+                <div className='container-fluid p-5 pt-3'>
+                    <div className="row">
+                        {courses && courses.map((course) => (
+                            <div className="col-md-3">
+                                <Course course={course} />
+                            </div>
+
+
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
