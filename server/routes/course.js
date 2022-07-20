@@ -19,7 +19,7 @@ router.put('/course/lesson-remove/:slug/:lessonId', requireSignIn, checkInstruct
 router.post('/course/lesson-update/:slug/:lessonId', requireSignIn, checkInstructor, updateLesson)
 router.put('/course/publish/:courseId', requireSignIn, checkInstructor, publishCourse)
 router.put('/course/unpublish/:courseId', requireSignIn, checkInstructor, unpublishCourse)
-router.put('/course/:slug', read)
+router.get('/course/view/:slug', read)
 
 router.get('/courses', courses)
 
