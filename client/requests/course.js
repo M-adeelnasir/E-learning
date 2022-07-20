@@ -39,5 +39,5 @@ export const coursePublish = async (courseId) => {
     return await axios.put(`/api/v1/course/publish/${courseId}`)
 }
 export const courseUnpublish = async (courseId) => {
-    return await axios.put(`/api/v1/course/publish/${courseId}`)
+    return await axios.put(`/api/v1/course/unpublish/${courseId}`)
 }

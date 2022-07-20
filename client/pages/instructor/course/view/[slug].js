@@ -58,7 +58,7 @@ const Course = () => {
 
     useEffect(() => {
 
-    }, [course])
+    }, [course, course._id])
 
 
 
@@ -138,22 +138,26 @@ const Course = () => {
 
     const handleUnpublish = async () => {
         try {
-            const { data } = await courseUnpublish()
+            const { data } = await courseUnpublish(course._id)
             setCourse(data.data)
-            toast("Course Published")
+            toast("Course Unublished")
         } catch (err) {
-            toast("Course Published Failed")
+            toast("Course Unublished Failed")
 
         }
     }
 
     const handlePublish = async () => {
+
         try {
-            const { data } = await coursePublish()
+            console.log(course._id)
+
+            const { data } = await coursePublish(course._id)
             setCourse(data.data)
-            toast("Course Unpublished")
+            console.log(data.data)
+            toast("Course published")
         } catch (err) {
-            toast("Course Unpublished Failed")
+            toast("Course published Failed")
 
         }
     }
@@ -191,8 +195,9 @@ const Course = () => {
 
                                 {course && course.lessons.length < 5 ?
                                     (<span className='text-danger' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
-                                    course.publish ? <Tooltip className='text-success m-3' placement="top" title="Unpublish">
-                                        <Button onClick={handleUnpublish} ><CloseOutlined /></Button>
+                                    course.published ? <Tooltip className='text-danger m-3' placement="top"
+                                        title="Unpublish">
+                                        <Button onClick={(e) => handleUnpublish(course._id)} ><CloseOutlined /></Button>
                                     </Tooltip> :
                                         (<Tooltip className='text-success m-3' placement="top" title="Pblish">
                                             <Button onClick={handlePublish}><CheckOutlined /></Button>
@@ -270,7 +275,7 @@ const Course = () => {
                 </div>
             </div>
 
-        </InstructorRoute>
+        </InstructorRoute >
     )
 }
 

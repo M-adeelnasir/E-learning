@@ -402,3 +402,52 @@ exports.updateLesson = async (req, res) => {
         })
     }
 }
+
+
+exports.publishCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params
+
+        const courseIns = await Course.findById({ _id: courseId })
+        if (courseIns.instructor.toString() !== req.user._id) return res.sendStatus(400)
+
+        const course = await Course.findByIdAndUpdate({ _id: courseId }, { published: true }, { new: true })
+        console.log(course)
+
+        res.json({
+            success: true,
+            data: course
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+exports.unpublishCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params
+
+        const courseIns = await Course.findById({ _id: courseId })
+        if (courseIns.instructor.toString() !== req.user._id) return res.sendStatus(400)
+
+        const course = await Course.findByIdAndUpdate({ _id: courseId }, { published: false }, { new: true })
+        console.log(course)
+        res.json({
+            success: true,
+            data: course
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+
+    }
+}
