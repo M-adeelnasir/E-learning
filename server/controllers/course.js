@@ -451,3 +451,23 @@ exports.unpublishCourse = async (req, res) => {
 
     }
 }
+
+
+exports.courses = async (req, res) => {
+    try {
+        const courses = await Course.find({ published: true }).populate("instructor", "name _id")
+
+        console.log(courses)
+        res.json({
+            success: true,
+            data: courses
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}

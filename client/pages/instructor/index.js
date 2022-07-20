@@ -3,6 +3,8 @@ import InstructorRoute from '../../components/routes/InstructorRoute'
 import TopNav from '../../components/TopNav'
 import UserNav from '../../components/nav/UserNav'
 import Courses from './course/Courses'
+
+
 const index = () => {
     return (
         <InstructorRoute>

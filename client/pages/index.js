@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TopNav from '../components/TopNav'
 
 
 const Index = () => {
+    const [course, setCourse] = useState([]);
+
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <>
             <TopNav />
