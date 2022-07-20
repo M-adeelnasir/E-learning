@@ -455,9 +455,8 @@ exports.unpublishCourse = async (req, res) => {
 
 exports.courses = async (req, res) => {
     try {
-        const courses = await Course.find({ published: true }).populate("instructor", "name _id")
+        const courses = await Course.find({ published: true }).populate("instructor", "name _id").select("-lessons")
 
-        console.log(courses)
         res.json({
             success: true,
             data: courses
