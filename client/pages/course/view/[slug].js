@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Modal } from 'antd'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { InfoOutlined } from '@ant-design/icons'
@@ -8,9 +9,13 @@ import ReactPlayer from 'react-player'
 
 
 const Course = ({ course }) => {
+    const [visible, setVisible] = useState(false)
+    const [preview, setPreview] = useState("")
+
+
 
     const { name, description, price, paid, instructor, updatedAt, image } = course
-    console.log(course)
+
 
     const [isSSR, setIsSSR] = useState(true)
 
@@ -22,7 +27,8 @@ const Course = ({ course }) => {
     return (
         <>
             <TopNav />
-            {!isSSR &&
+            {!isSSR && <>
+
                 <div className="jumbotron bg-primary grad">
                     <div className="container d-flex justify-content-between text-white">
                         <div className="col-md-6">
@@ -38,14 +44,18 @@ const Course = ({ course }) => {
                             </div>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-4 border border-white">
                             {course.lessons && course.lessons[0] ?
-                                (<div>
+                                (<div onClick={() => {
+                                    setPreview(course.lessons[0].video.Location)
+                                    setVisible(!visible)
+                                }}>
                                     <ReactPlayer
                                         url={course.lessons[0].video.Location}
-                                        width="370px"
-                                        height="300px"
+                                        width="100%"
+                                        height="250px"
                                         light={image.Location}
+
                                     />
                                 </div>) : (
                                     <div>{image.Location}</div>
@@ -54,6 +64,27 @@ const Course = ({ course }) => {
                         </div>
                     </div>
                 </div>
+
+                <Modal
+                    title="Video Preview"
+                    visible={visible}
+                    onCancel={() => setVisible(false)}
+
+                >
+                    <ReactPlayer
+                        url={course.lessons[0].video.Location}
+                        width="100%"
+                        height="250px"
+                        light={image.Location}
+                        footer={null}
+                    />
+
+                </Modal>
+            </>
+
+
+
+
             }
         </>
     )
