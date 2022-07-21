@@ -50,7 +50,7 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, u
                             size='large'
                             loading={loading}
                         >
-                            {user ? "Enroll Now" : "Login to Enroll"}
+                            {user ? enrolled ? "Enroll Now" : "Go to Course" : "Login to Enroll"}
                         </Button>
                     }
                 </div>

@@ -497,16 +497,15 @@ exports.checkEnrolment = async (req, res) => {
     try {
         const { courseId } = req.params
 
-        const user = await User.findById({ _id: req.user.id })
+        const user = await User.findById({ _id: req.user._id })
 
         let ids = []
         let length = user && user.courses && user.courses.length
-
         for (let i = 0; i < length; i++) {
             ids.push(user.courses[i].toString())
         }
 
-        res.status({
+        res.json({
             status: ids.includes(courseId)
         })
 

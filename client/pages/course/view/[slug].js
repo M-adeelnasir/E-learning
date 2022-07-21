@@ -24,8 +24,23 @@ const Course = ({ course }) => {
     }, [])
 
     useEffect(() => {
-        console.log(user)
     }, [user, course])
+
+
+    useEffect(() => {
+        if (user && course) handelCheckEnrollment()
+    }, [user && course])
+
+
+    const handelCheckEnrollment = async () => {
+        try {
+            const { data } = await axios.get(`/api/v1/course/checkEnrollment/${course._id}`)
+            setEnrolled(data.status)
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     const handleFreeEnrollment = async () => {
 
