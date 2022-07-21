@@ -70,7 +70,12 @@ const courseSchema = mongoose.Schema({
         ref: "User",
         required: true
     },
-    lessons: [lessonSchema]
+    lessons: [lessonSchema],
+
+    courses: [{
+        type: ObjectId,
+        ref: 'Course'
+    }]
 
 
 

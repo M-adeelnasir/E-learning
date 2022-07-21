@@ -518,3 +518,33 @@ exports.checkEnrolment = async (req, res) => {
         })
     }
 }
+
+
+exports.freeEnrollment = async (req, res) => {
+    try {
+        const { courseId } = req.body
+        const user = await user.findById({ _id: req.user._id })
+        if (!user) return res.sendStatus(401)
+
+        const course = await Course.findById({ _id: courseId })
+
+        if (course) return res.senStatus(404)
+
+        const enrolledCourse = await User.findByIdAndUpdate({ _id: req.user._id }, {
+            $push: { courses: { _id: course._id } }
+        }, { new: true, runValidators: true })
+
+
+        res.json({
+            success: true,
+            data: enrolledCourse
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
