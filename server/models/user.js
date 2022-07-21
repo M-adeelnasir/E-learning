@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { ObjectId } = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -31,6 +32,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "/avater.png"
     },
+    courses: [{
+        type: ObjectId,
+        ref: 'Course'
+    }],
     stripe_account_id: {},
     stripe_seller: {},
     stripeSession: {}

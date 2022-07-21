@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import TopNav from '../../../components/TopNav'
 import SingleCourseJumbo from '../../../components/singleCourse/SingleCourseJumbo'
 import CourseModal from '../../../components/singleCourse/CourseModal'
@@ -33,16 +34,33 @@ const Course = ({ course }) => {
 
 
     const handelCheckEnrollment = async () => {
+        setLoading(true)
         try {
             const { data } = await axios.get(`/api/v1/course/checkEnrollment/${course._id}`)
             setEnrolled(data.status)
+            console.log(data)
+            setLoading(false)
 
         } catch (err) {
+            setLoading(false)
+            toast("Enrolled Failed!")
             console.log(err)
         }
     }
 
     const handleFreeEnrollment = async () => {
+        setLoading(true)
+
+        try {
+            const { data } = await axios.post(`/api/v1/course/freeEnrollment/${course._id}`)
+            setLoading(false)
+            console.log(data.msg)
+            toast(data.msg)
+        } catch (err) {
+            console.log(err)
+            setLoading(false)
+
+        }
 
     }
     const handlePaidEnrollment = async () => {

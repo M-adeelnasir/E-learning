@@ -522,22 +522,25 @@ exports.checkEnrolment = async (req, res) => {
 
 exports.freeEnrollment = async (req, res) => {
     try {
-        const { courseId } = req.body
-        const user = await user.findById({ _id: req.user._id })
+        const { courseId } = req.params
+
+        const user = await User.findById({ _id: req.user._id })
         if (!user) return res.sendStatus(401)
 
         const course = await Course.findById({ _id: courseId })
 
-        if (course) return res.senStatus(404)
+        if (!course) return res.sendStatus(404)
 
         const enrolledCourse = await User.findByIdAndUpdate({ _id: req.user._id }, {
-            $push: { courses: { _id: course._id } }
+            //addtoSet make sure no dupliactes of same object
+            $addToSet: { courses: { _id: course._id } }
         }, { new: true, runValidators: true })
 
 
         res.json({
             success: true,
-            data: enrolledCourse
+            data: enrolledCourse,
+            msg: "Congratulation, You have successully Enrolled"
         })
 
     } catch (err) {

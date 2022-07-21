@@ -49,11 +49,13 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, u
                             className=" mt-2 mb-2"
                             size='large'
                             loading={loading}
+                            onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}
                         >
-                            {user ? enrolled ? "Enroll Now" : "Go to Course" : "Login to Enroll"}
+                            {user ? !enrolled && user ? "Enroll Now" : "Go to Course" : "Login to Enroll"}
                         </Button>
                     }
                 </div>
+
             </div>
         </div>
     )

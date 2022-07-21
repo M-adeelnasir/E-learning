@@ -21,7 +21,7 @@ router.put('/course/publish/:courseId', requireSignIn, checkInstructor, publishC
 router.put('/course/unpublish/:courseId', requireSignIn, checkInstructor, unpublishCourse)
 router.get('/course/view/:slug', read)
 router.get('/course/checkEnrollment/:courseId', requireSignIn, checkEnrolment)
-router.post('/course/freeEnrollment', requireSignIn, freeEnrollment)
+router.post('/course/freeEnrollment/:courseId', requireSignIn, freeEnrollment)
 
 router.get('/courses', courses)
 
