@@ -11,6 +11,8 @@ import { Context } from '../../../context'
 const Course = ({ course }) => {
     const [visible, setVisible] = useState(false)
     const [preview, setPreview] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [enrolled, setEnrolled] = useState({})
 
     const { state } = useContext(Context)
     const { user } = state
@@ -40,7 +42,7 @@ const Course = ({ course }) => {
 
                 <>
                     <div className="pt-3 pb-3">
-                        <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} user={user} handlePaidEnrollment={handlePaidEnrollment} handleFreeEnrollment={handleFreeEnrollment} />
+                        <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} user={user} handlePaidEnrollment={handlePaidEnrollment} handleFreeEnrollment={handleFreeEnrollment} loading={loading} enrolled={enrolled} />
 
                         <CourseModal visible={visible} setVisible={setVisible} course={course} preview={preview} />
                     </div>

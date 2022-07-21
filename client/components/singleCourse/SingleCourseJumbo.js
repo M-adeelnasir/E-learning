@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player'
 import { Button } from 'antd'
 
 
-const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, user, handleFreeEnrollment, handlePaidEnrollment }) => {
+const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, user, handleFreeEnrollment, handlePaidEnrollment, enrolled, loading }) => {
 
     const { name, description, price, paid, instructor, updatedAt, image } = course
     return (
@@ -48,6 +48,7 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, u
                             type='danger'
                             className=" mt-2 mb-2"
                             size='large'
+                            loading={loading}
                         >
                             {user ? "Enroll Now" : "Login to Enroll"}
                         </Button>

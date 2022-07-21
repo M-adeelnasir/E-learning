@@ -492,3 +492,30 @@ exports.read = async (req, res) => {
         })
     }
 }
+
+exports.checkEnrolment = async (req, res) => {
+    try {
+        const { courseId } = req.params
+
+        const user = await User.findById({ _id: req.user.id })
+
+        let ids = []
+        let length = user && user.courses && user.courses.length
+
+        for (let i = 0; i < length; i++) {
+            ids.push(user.courses[i].toString())
+        }
+
+        res.status({
+            status: ids.includes(courseId)
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
