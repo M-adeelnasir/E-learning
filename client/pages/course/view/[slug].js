@@ -40,6 +40,7 @@ const Course = ({ course }) => {
         setLoading(true)
         try {
             const { data } = await axios.get(`/api/v1/course/checkEnrollment/${course._id}`)
+            console.log(data)
             setEnrolled(data.status)
             setLoading(false)
 
@@ -72,8 +73,24 @@ const Course = ({ course }) => {
         }
 
     }
-    const handlePaidEnrollment = async () => {
 
+
+
+    const handlePaidEnrollment = async () => {
+        try {
+            console.log(course.paid, "hited")
+            const { data } = await axios.put(`/api/v1/course/purchase/${course._id}`)
+            console.log(data.data.stripeSession)
+
+            const { data: result } = await axios.put(`/api/v1/course/paymentIntent/${data.data.stripeSession}`)
+
+            console.log(result)
+
+            // router.push(`/course/payment/${data.data._id}`)
+
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 

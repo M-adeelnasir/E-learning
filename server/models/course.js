@@ -72,6 +72,10 @@ const courseSchema = mongoose.Schema({
     },
     lessons: [lessonSchema],
 
+    courses: [{
+        type: ObjectId,
+        ref: 'Course'
+    }]
 
 
 

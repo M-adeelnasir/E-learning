@@ -5,6 +5,8 @@ const Course = require('../models/course')
 const slugify = require('slugify');
 const mongoose = require('mongoose')
 const fs = require('fs')
+const stripe = require('stripe')(process.env.STRIP_SECRET_KEY);
+
 
 
 
@@ -499,17 +501,15 @@ exports.checkEnrolment = async (req, res) => {
 
         const user = await User.findById({ _id: req.user._id })
 
+
         let ids = []
         let length = user && user.courses && user.courses.length
         for (let i = 0; i < length; i++) {
             ids.push(user.courses[i].toString())
         }
-
-        console.log(ids, ids.includes(courseId))
         res.json({
             status: ids.includes(courseId)
         })
-
 
     } catch (err) {
         console.log(err)
@@ -543,6 +543,66 @@ exports.freeEnrollment = async (req, res) => {
             data: enrolledCourse,
             msg: "Congratulation, You have successully Enrolled"
         })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+exports.paidEnrollment = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+
+        console.log(courseId)
+
+        const course = await Course.findById({ _id: courseId })
+
+
+        const user = await User.findByIdAndUpdate({ _id: req.user._id }, { stripeSession: course._id }, { new: true })
+
+        res.json({
+            data: user,
+            success: true
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+exports.paymentIntent = async (req, res) => {
+    try {
+        const { courseId } = req.params
+
+        const course = await Course.findById({ _id: courseId })
+        console.log("course===>", course)
+
+        const price = course.price * 100
+        console.log(price, course.price)
+
+        const paymentIntents = await stripe.paymentIntents.create({
+            description: 'E-learning platform',
+            amount: price,         //as 100 =1$
+            currency: 'usd',
+            payment_method_types: ['card'],
+        })
+        // console.log("payent intent==>", paymentIntents)
+
+
+        const user = await User.findByIdAndUpdate({ _id: req.user._id }, { stripPaymentIntent: { paymentIntents } })
+        res.send({
+            data: user
+        })
+
 
     } catch (err) {
         console.log(err)

@@ -37,8 +37,13 @@ const userSchema = new mongoose.Schema({
         ref: 'Course'
     }],
     stripe_account_id: {},
-    stripe_seller: {},
-    stripeSession: {}
+
+    stripPaymentIntent: {},
+
+    stripeSession: {
+        type: ObjectId,
+        ref: "Course"
+    }
 }, { timestamps: true })
 
 
