@@ -505,6 +505,7 @@ exports.checkEnrolment = async (req, res) => {
             ids.push(user.courses[i].toString())
         }
 
+        console.log(ids, ids.includes(courseId))
         res.json({
             status: ids.includes(courseId)
         })
