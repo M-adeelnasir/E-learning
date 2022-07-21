@@ -15,7 +15,6 @@ const LessonsList = ({ course, preview, setPreview, visible, setVisible, }) => {
 
 
 
-    console.log(lessons);
     return (
         <div className='container pt-4 pb-4'>
             <List

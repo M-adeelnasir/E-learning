@@ -133,11 +133,18 @@ const Create = () => {
 
 
 
+
     const handleDeletLesson = async (lessonId) => {
         try {
             const { data } = await deleteLesson(router.query.slug, lessonId)
-            console.log(data.data.lessons);
-            setState({ ...state, lessons: data.data.lessons })
+
+            if (data.success) {
+                let arr = state.lessons;
+                const index = arr.findIndex((el) => el._id === current._id)
+                arr[index] = current
+                setState({ ...state, lessons: arr })
+            }
+
             toast("Lesson deleted")
         } catch (err) {
             console.log(err);

@@ -189,12 +189,12 @@ const Course = () => {
 
                             </div>
                             <div className='m-4 d-flex'>
-                                <Tooltip className='text-info' placement="top" title="Edit">
+                                <Tooltip className='text-info m-3' placement="top" title="Edit">
                                     <Button onClick={() => router.push(`/instructor/course/edit/${course.slug}`)}><EditOutlined /></Button>
                                 </Tooltip>
 
                                 {course && course.lessons.length < 5 ?
-                                    (<span className='text-danger text-center' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
+                                    (<span className='text-danger text-center m-3' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
                                     course.published ? <Tooltip className='text-danger m-3' placement="top"
                                         title="Unpublish">
                                         <Button onClick={(e) => handleUnpublish(course._id)} ><CloseOutlined /></Button>
@@ -203,8 +203,6 @@ const Course = () => {
                                             <Button onClick={handlePublish}><CheckOutlined /></Button>
                                         </Tooltip>)
                                 }
-
-
                             </div>
 
                         </div>

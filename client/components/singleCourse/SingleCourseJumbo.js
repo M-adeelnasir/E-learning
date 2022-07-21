@@ -1,9 +1,10 @@
 import React from 'react'
 import { currencyFormate } from '../../utils/helpers'
 import ReactPlayer from 'react-player'
+import { Button } from 'antd'
 
 
-const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible }) => {
+const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, user, handleFreeEnrollment, handlePaidEnrollment }) => {
 
     const { name, description, price, paid, instructor, updatedAt, image } = course
     return (
@@ -38,6 +39,18 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible })
                         </div>) : (
                             <div>{image.Location}</div>
                         )
+                    }
+
+                    {course &&
+                        <Button
+                            shape='square'
+                            block
+                            type='danger'
+                            className=" mt-2 mb-2"
+                            size='large'
+                        >
+                            {user ? "Enroll Now" : "Login to Enroll"}
+                        </Button>
                     }
                 </div>
             </div>

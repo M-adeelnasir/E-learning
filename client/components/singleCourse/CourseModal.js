@@ -9,10 +9,8 @@ const CourseModal = ({ course, visible, setVisible, preview, }) => {
             <Modal
                 title="Video Preview"
                 visible={visible}
-                onCancel={() => {
-                    setVisible(!visible)
-
-                }}
+                onCancel={() => setVisible(false)
+                }
                 width={620}
                 footer={null}
 
