@@ -84,9 +84,9 @@ const Course = ({ course }) => {
 
             const { data: result } = await axios.put(`/api/v1/course/paymentIntent/${data.data.stripeSession}`)
 
-            console.log(result)
+            console.log(result.data)
 
-            // router.push(`/course/payment/${data.data._id}`)
+            router.push(`/course/payment/${data.data._id}`)
 
         } catch (err) {
             console.log(err)

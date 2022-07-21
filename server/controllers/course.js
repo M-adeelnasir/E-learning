@@ -587,7 +587,6 @@ exports.paymentIntent = async (req, res) => {
         console.log("course===>", course)
 
         const price = course.price * 100
-        console.log(price, course.price)
 
         const paymentIntents = await stripe.paymentIntents.create({
             description: 'E-learning platform',
@@ -603,6 +602,30 @@ exports.paymentIntent = async (req, res) => {
             data: user
         })
 
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+
+
+
+exports.userBuy = async (req, res) => {
+    try {
+        const { userId } = req.params
+        if (userId !== req.user._id) return res.sendStatus(400)
+
+        const user = await User.findById({ _id: userId })
+        res.json({
+            success: true,
+            data: user
+        })
 
     } catch (err) {
         console.log(err)
