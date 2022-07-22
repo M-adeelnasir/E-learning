@@ -81,7 +81,9 @@ const StripCheckout = ({ onReadyId }) => {
             setProcessing(false)
             setError(`Pyament Faild ${payload.error.message}`)
         } else {
-            console.log(JSON.stringify(payload, null, 4));
+            // console.log(JSON.stringify(payload, null, 4));
+
+
 
         }
 

@@ -635,3 +635,33 @@ exports.userBuy = async (req, res) => {
         })
     }
 }
+
+
+exports.onPaymentSuccess = async (req, res) => {
+    try {
+        const { userId, courseId } = req.params;
+
+        // const user = await User.findById({ _id: userId })
+
+
+        // if (user.stripeSession !== courseId) return res.sendStatus(400)
+
+        const user = await User.findByIdAndUpdate({ _id: userId }, {
+            $addToSet: { courses: { _id: userId } }
+        })
+        if (!user) return res.sendStatus(401)
+        console.log(user)
+
+        res.json({
+            success: true,
+            data: user
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}

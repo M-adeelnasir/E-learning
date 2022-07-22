@@ -4,7 +4,7 @@ const formidable = require('express-formidable');
 
 
 const { requireSignIn, checkInstructor, checkAdmin, checkAuth } = require('../middleware/auth')
-const { uploadImage, removeImage, createCourse, getInstructorCourses, getCourse, uploadVideo, removeVideo, addLesson, updateCourse, removeLesson, updateLesson, publishCourse, unpublishCourse, courses, read, checkEnrolment, freeEnrollment, paidEnrollment, paymentIntent, userBuy } = require('../controllers/course')
+const { uploadImage, removeImage, createCourse, getInstructorCourses, getCourse, uploadVideo, removeVideo, addLesson, updateCourse, removeLesson, updateLesson, publishCourse, unpublishCourse, courses, read, checkEnrolment, freeEnrollment, paidEnrollment, paymentIntent, userBuy, onPaymentSuccess } = require('../controllers/course')
 router.post('/image-upload', requireSignIn, checkInstructor, uploadImage)
 router.post('/remove/course-image', requireSignIn, checkInstructor, removeImage)
 router.post('/course/create', requireSignIn, checkInstructor, createCourse)
@@ -25,6 +25,7 @@ router.post('/course/freeEnrollment/:courseId', requireSignIn, freeEnrollment)
 router.put('/course/purchase/:courseId', requireSignIn, paidEnrollment)
 router.put('/course/paymentIntent/:courseId', requireSignIn, paymentIntent)
 router.get('/course/buying/:userId', requireSignIn, userBuy)
+router.get('/course/buying/:courseId/:userId', requireSignIn, onPaymentSuccess)
 
 router.get('/courses', courses)
 
