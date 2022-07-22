@@ -40,10 +40,8 @@ const Course = ({ course }) => {
         setLoading(true)
         try {
             const { data } = await axios.get(`/api/v1/course/checkEnrollment/${course._id}`)
-            console.log(data)
             setEnrolled(data.status)
             setLoading(false)
-
         } catch (err) {
             setLoading(false)
             toast("Enrolled Failed!")
@@ -77,7 +75,10 @@ const Course = ({ course }) => {
 
 
     const handlePaidEnrollment = async () => {
+
         try {
+            if (enrolled) return router.push(`/user/courses/${course.slug}`)
+
             console.log(course.paid, "hited")
             const { data } = await axios.put(`/api/v1/course/purchase/${course._id}`)
             console.log(data.data.stripeSession)
