@@ -588,11 +588,16 @@ exports.paymentIntent = async (req, res) => {
 
         const price = course.price * 100
 
+
+
+
+
         const paymentIntents = await stripe.paymentIntents.create({
             description: 'E-learning platform',
             amount: price,         //as 100 =1$
             currency: 'usd',
             payment_method_types: ['card'],
+
         })
         // console.log("payent intent==>", paymentIntents)
 

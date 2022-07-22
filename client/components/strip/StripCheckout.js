@@ -71,7 +71,8 @@ const StripCheckout = ({ onReadyId }) => {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: e.target.name.value
+                    name: e.target.name.value,
+
                 }
 
             }
@@ -89,7 +90,7 @@ const StripCheckout = ({ onReadyId }) => {
                 const { data } = await axios.put(`/api/v1/course/payment/${currentUser.stripeSession}/${currentUser._id}`)
                 toast.success("Welcome You Successfully Purchased The Course")
                 router.back()
-
+                setProcessing(false)
             } catch (err) {
                 console.log(err)
             }
