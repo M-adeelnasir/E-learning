@@ -40,11 +40,11 @@ const Index = ({ courses }) => {
                 <TopNav />
                 <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>E-Learning Management System</h1>
 
-                {!isSSR && <div className='container-fluid p-5 pt-3'>
+                {!isSSR && <div className='container p-5 pt-3'>
                     <div className="row">
 
                         {courses && courses.map((course) => (
-                            <div className="col-md-3" key={course._id}>
+                            <div className="col-md-4" key={course._id}>
                                 <Course course={course} />
                             </div>
                         ))}
