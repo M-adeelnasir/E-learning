@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import TopNav from '../../../components/TopNav'
 
 const MyCourse = () => {
 
@@ -12,8 +13,13 @@ const MyCourse = () => {
         }
     }, [router.isReady])
 
+
+
     return (
-        <div>MyCourse</div>
+        <>
+            <TopNav />
+            <div>MyCourse</div>
+        </>
     )
 }
 

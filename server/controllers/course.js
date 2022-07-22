@@ -554,6 +554,10 @@ exports.freeEnrollment = async (req, res) => {
 }
 
 
+
+
+//strip handeling and pay for the course
+
 exports.paidEnrollment = async (req, res) => {
     try {
         const { courseId } = req.params;
@@ -662,6 +666,34 @@ exports.onPaymentSuccess = async (req, res) => {
             success: true,
             data: user
         })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERRPR"
+        })
+    }
+}
+
+
+
+exports.userCourses = async (req, res) => {
+    try {
+        const { slug } = req.params
+
+        const user = await User.findById({ _id: req.user._id })
+
+        //will fetch all courses in user courses array of ids
+        const courses = await Course.find({ _id: { $in: user.courses } }).populate("instructor", "_id name")
+
+        console.log(user)
+
+        res.json({
+            success: true,
+            data: courses
+        })
+
 
     } catch (err) {
         console.log(err)
