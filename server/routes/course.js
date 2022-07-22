@@ -25,7 +25,7 @@ router.post('/course/freeEnrollment/:courseId', requireSignIn, freeEnrollment)
 router.put('/course/purchase/:courseId', requireSignIn, paidEnrollment)
 router.put('/course/paymentIntent/:courseId', requireSignIn, paymentIntent)
 router.get('/course/buying/:userId', requireSignIn, userBuy)
-router.get('/course/buying/:courseId/:userId', requireSignIn, onPaymentSuccess)
+router.put('/course/payment/:courseId/:userId', requireSignIn, onPaymentSuccess)
 
 router.get('/courses', courses)
 

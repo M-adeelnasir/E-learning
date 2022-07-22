@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 
@@ -23,7 +24,7 @@ const StripCheckout = ({ onReadyId }) => {
     const stripe = useStripe();
     const elements = useElements();
 
-
+    const router = useRouter()
 
     const userOrder = async (id) => {
         console.log(id)
@@ -78,12 +79,20 @@ const StripCheckout = ({ onReadyId }) => {
 
         if (payload.error) {
             // console.log(payload.error);
+            console.log(payload.error)
             setProcessing(false)
             setError(`Pyament Faild ${payload.error.message}`)
         } else {
-            // console.log(JSON.stringify(payload, null, 4));
+            console.log(JSON.stringify(payload, null, 4));
 
+            try {
+                const { data } = await axios.put(`/api/v1/course/payment/${currentUser.stripeSession}/${currentUser._id}`)
+                toast.success("Welcome You Successfully Purchased The Course")
+                router.back()
 
+            } catch (err) {
+                console.log(err)
+            }
 
         }
 

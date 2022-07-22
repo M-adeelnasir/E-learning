@@ -641,14 +641,15 @@ exports.onPaymentSuccess = async (req, res) => {
     try {
         const { userId, courseId } = req.params;
 
+        console.log(userId, courseId)
         // const user = await User.findById({ _id: userId })
 
 
         // if (user.stripeSession !== courseId) return res.sendStatus(400)
 
         const user = await User.findByIdAndUpdate({ _id: userId }, {
-            $addToSet: { courses: { _id: userId } }
-        })
+            $addToSet: { courses: { _id: courseId } }
+        }, { new: true })
         if (!user) return res.sendStatus(401)
         console.log(user)
 
