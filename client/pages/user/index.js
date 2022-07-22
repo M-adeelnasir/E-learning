@@ -1,11 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UserRoute from '../../components/routes/userRoute'
 import TopNav from '../../components/TopNav'
 import UserNav from '../../components/nav/UserNav'
-import InstructorRoute from '../../components/routes/InstructorRoute'
+import { userCourses } from '../../requests/course'
+import { SyncOutlined, CaretLeftOutlined } from '@ant-design/icons'
+import Link from 'next/link'
 
 
 const User = () => {
+    const [courses, setCourses] = useState([])
+    const [loading, setLoading] = useState(false)
+
+
+
+    const loadCourses = async () => {
+        setLoading(true)
+        try {
+            const { data: user } = await userCourses()
+            console.log(user.data)
+            setCourses(user.data)
+            setLoading(false)
+        } catch (err) {
+            setLoading(false)
+            console.log(err)
+        }
+    }
+
+
+    useEffect(() => {
+        loadCourses()
+    }, [])
 
     return (
         <>
@@ -15,8 +39,44 @@ const User = () => {
                 </div>
                 <div className='col-md-10'>
                     <TopNav />
-                    <div>Hello</div>
+                    <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>User Dashboard</h1>
+
+                    {loading ?
+                        <div className="d-flex justify-content-center align-items-center text-center h-100">
+                            <SyncOutlined
+                                spin
+                                className="display-1 "
+                            />
+                        </div>
+                        : <div className='container m-3'>
+
+                            {courses && courses.length &&
+
+                                courses.map((course) => (
+
+                                    <div className='d-flex justify-content-around  '>
+                                        <div className='d-flex flex-wrap '>
+                                            <img src={course && course.image && course.image.Location} alt="" srcset="" />
+                                            <div className='d-flex flex-column mt-2' style={{ marginLeft: "10px" }}>
+                                                <Link href=""><a ><h6 className='' >{course.name}</h6></a></Link>
+                                                <p className='mb-0' >{course.description.substr(0, 100)}</p>
+                                                <p className='mb-0'>{course && course.instructor && course.instructor.name}</p>
+                                                <p className='mb-0'>{course && course.lessons && course.lessons.length} Lessons</p>
+                                            </div>
+                                        </div>
+                                        <h3 className="self-align-center text-center m-auto text-primary"><Link href={`/user/course/${course && course.slug}`}>
+                                            <a >
+                                                <CaretLeftOutlined className='' style={{ cursor: "pointer" }} />
+                                            </a>
+                                        </Link></h3>
+                                    </div>
+
+                                ))
+                            }
+
+                        </div>}
                 </div>
+
             </div>
         </>
 

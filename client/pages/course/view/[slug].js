@@ -77,7 +77,7 @@ const Course = ({ course }) => {
     const handlePaidEnrollment = async () => {
 
         try {
-            if (enrolled) return router.push(`/user/courses/${course.slug}`)
+            if (enrolled) return router.push(`/user/course/${course.slug}`)
 
             console.log(course.paid, "hited")
             const { data } = await axios.put(`/api/v1/course/purchase/${course._id}`)

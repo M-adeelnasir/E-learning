@@ -45,3 +45,8 @@ export const courseUnpublish = async (courseId) => {
 export const allCourses = async () => {
     return await axios.get('/api/v1/courses')
 }
+
+
+export const userCourses = async () => {
+    return await axios.get('api/v1/user/courses')
+}

@@ -63,7 +63,7 @@ const login = () => {
     return (
         <>
             <TopNav />
-            <h1 className='jumbotron bg-primary text-center pt-5 pb-5 grad'>Login</h1>
+            <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>Login</h1>
 
             <div className="container mt-3 col-md-4 ">
                 <div className="border p-5 ">
