@@ -1,5 +1,6 @@
 const expressJwt = require('express-jwt')
 const User = require('../models/user')
+const Course = require('../models/course')
 
 exports.requireSignIn = expressJwt({ getToken: (req, res) => { return req.cookies.token }, secret: process.env.JWT_SECRET_KEY, algorithms: ['sha1', 'RS256', 'HS256'] })
 
@@ -80,4 +81,31 @@ exports.checkAdmin = async (req, res, next) => {
         })
     }
 
+}
+
+
+
+exports.haveCourse = async (req, res, next) => {
+    try {
+        const { slug } = req.params
+        const user = await User.findById({ _id: req.user_id })
+        const course = await Course.findOne({ slug })
+
+        let ids = [];
+        let length = user && user.courses && user.courses.length
+
+        for (let i = 0; i < length; i++) {
+            ids.push(user.courses[i].toString())
+        }
+
+        if (!ids.includes(course._id)) {
+            return res.sendStatus(403)
+        } else {
+
+            next()
+        }
+
+    } catch (err) {
+
+    }
 }

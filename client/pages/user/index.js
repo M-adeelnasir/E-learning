@@ -3,7 +3,7 @@ import UserRoute from '../../components/routes/userRoute'
 import TopNav from '../../components/TopNav'
 import UserNav from '../../components/nav/UserNav'
 import { userCourses } from '../../requests/course'
-import { SyncOutlined, CaretLeftOutlined } from '@ant-design/icons'
+import { SyncOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 
 
@@ -58,15 +58,15 @@ const User = () => {
                                         <div className='d-flex flex-wrap '>
                                             <img src={course && course.image && course.image.Location} alt="" srcset="" />
                                             <div className='d-flex flex-column mt-2' style={{ marginLeft: "10px" }}>
-                                                <Link href=""><a ><h6 className='' >{course.name}</h6></a></Link>
+                                                <Link href={`/user/course/${course && course.slug}`}><a ><h5 className='text-primary'>{course.name}</h5></a></Link>
                                                 <p className='mb-0' >{course.description.substr(0, 100)}</p>
-                                                <p className='mb-0'>{course && course.instructor && course.instructor.name}</p>
+                                                <p className='mb-0'>By: {course && course.instructor && course.instructor.name}</p>
                                                 <p className='mb-0'>{course && course.lessons && course.lessons.length} Lessons</p>
                                             </div>
                                         </div>
                                         <h3 className="self-align-center text-center m-auto text-primary"><Link href={`/user/course/${course && course.slug}`}>
                                             <a >
-                                                <CaretLeftOutlined className='' style={{ cursor: "pointer" }} />
+                                                <PlayCircleOutlined className='' style={{ cursor: "pointer" }} />
                                             </a>
                                         </Link></h3>
                                     </div>
