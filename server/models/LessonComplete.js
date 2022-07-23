@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema
 
 const markComplete = new mongoose.Schema({
-    courseId: {
+    course: {
         type: ObjectId,
         ref: 'Course'
     },
-    subrciberId: {
+    user: {
         type: ObjectId,
         ref: 'User'
     },

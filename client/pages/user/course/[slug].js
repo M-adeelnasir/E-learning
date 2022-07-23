@@ -35,6 +35,7 @@ const MyCourse = () => {
 
     const loadCourse = async () => {
         try {
+
             const { data } = await axios.get(`/api/v1/user/course/${router.query.slug}`)
             setCourse(data.data)
             console.log(data.data)
@@ -56,9 +57,9 @@ const MyCourse = () => {
 
     const handleComplete = async () => {
         try {
-            const { data } = await axios.post('/api/v1/make-as-complete', {
+            const { data } = await axios.post('/api/v1/lesson/make-as-complete', {
                 courseId: course._id,
-                lessonId: course.lessons && course.lessons[clicked] && course.lessons[clicked]._Id
+                lessonId: course.lessons && course.lessons[clicked] && course.lessons[clicked]._id
             })
             console.log(data)
         } catch (err) {
