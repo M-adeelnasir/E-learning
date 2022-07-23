@@ -17,6 +17,7 @@ const MyCourse = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [clicked, setClicked] = useState()
     const [hideY, setHideY] = useState("hidden")
+    const [showAlert, setShowAlert] = useState(true)
 
 
     const toggleCollapsed = () => {
@@ -25,13 +26,12 @@ const MyCourse = () => {
 
     const router = useRouter()
 
+
     useEffect(() => {
         if (router.isReady) {
             loadCourse()
-
         }
     }, [router.isReady])
-
 
     const loadCourse = async () => {
         try {
@@ -43,11 +43,28 @@ const MyCourse = () => {
         }
     }
 
+
+
+
+
     useEffect(() => {
         if (course && course.lessons.length > 10) {
             setHideY("scroll")
         }
     }, [hideY, course])
+
+
+    const handleComplete = async () => {
+        try {
+            const { data } = await axios.post('/api/v1/make-as-complete', {
+                courseId: course._id,
+                lessonId: course.lessons && course.lessons[clicked] && course.lessons[clicked]._Id
+            })
+            console.log(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
 
     return (
@@ -82,8 +99,30 @@ const MyCourse = () => {
                     </Menu>
 
                 </div>
-                <div className="col">{clicked !== -1 ? (
-                    <div>Hello</div>
+                <div className="col">{clicked != -1 && clicked !== undefined ? (
+
+                    <div>
+                        {showAlert && <div className="alert alert-success d-flex justify-content-between m-0 p-2">
+                            <p className='mb-0'>{course.lessons && course.lessons[clicked] && course.lessons[clicked].title.substr(0, 30)}</p>
+                            <p className='mb-0' onClick={handleComplete} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Mark As Complete</p>
+                        </div>}
+                        <div>
+                            {/* {JSON.stringify(course.lessons && course.lessons[0] && course.lessons[0].video)} */}
+                            {course.lessons && course.lessons[clicked] && course.lessons[clicked].video && course.lessons[clicked].video.Location &&
+                                <div className=''>
+                                    <ReactPlayer
+                                        url={course && course.lessons && course.lessons[clicked].video && course.lessons[clicked].video.Location}
+                                        controls
+                                        width="100%"
+                                        height="100%"
+
+                                    />
+                                </div>
+
+                            }
+                            {course && course.lessons && course.lessons[clicked] && course.lessons[clicked].content}
+                        </div>
+                    </div>
                 ) : ("Let Start! Learning Lesson")}</div>
             </div>
         </>
