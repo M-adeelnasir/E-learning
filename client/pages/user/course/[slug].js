@@ -48,7 +48,7 @@ const MyCourse = () => {
     return (
         <>
             <TopNav />
-            <div className='container-fluid d-flex'>
+            <div className='container-fluid d-flex flex'>
                 <div style={{
                     width: "300px",
                     marginTop: '10px'
@@ -63,7 +63,11 @@ const MyCourse = () => {
                             <Menu.Item onClick={() => setClicked(index)}><Avatar>{index + 1}</Avatar> {lesson.title.substr(0, 30)}</Menu.Item>
                         ))}
                     </Menu>
+
                 </div>
+                <div className="col">{clicked !== -1 ? (
+                    <div>Hello</div>
+                ) : ("Let Start! Learning Lesson")}</div>
             </div>
         </>
     )
