@@ -18,6 +18,7 @@ const MyCourse = () => {
     const [clicked, setClicked] = useState()
     const [hideY, setHideY] = useState("hidden")
     const [showAlert, setShowAlert] = useState(true)
+    const [completedLessons, setCompletedLessons] = useState([])
 
 
     const toggleCollapsed = () => {
@@ -61,12 +62,26 @@ const MyCourse = () => {
                 courseId: course._id,
                 lessonId: course.lessons && course.lessons[clicked] && course.lessons[clicked]._id
             })
-            console.log(data)
+            setShowAlert(false)
         } catch (err) {
             console.log(err)
         }
     }
 
+
+    const loadMarkedLesson = async () => {
+        try {
+            const { data } = await axios.get(`/api/v1/marked-lessons/${course._id}`)
+            console.log(data)
+            setCompletedLessons(data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        if (course) loadMarkedLesson()
+    }, [])
 
     return (
         <>

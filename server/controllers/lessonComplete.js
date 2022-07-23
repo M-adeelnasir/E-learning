@@ -13,13 +13,16 @@ exports.markAsComplet = async (req, res) => {
             course: courseId
         })
 
+        console.log(lessonId)
+
+
 
         if (existing) {
             const update = await LessonComplete.findOneAndUpdate({
                 user: req.user._id,
                 course: courseId
             }, {
-                $addToSet: { lessons: { lessonId } }
+                $addToSet: { lessons: lessonId }
             })
             console.log(update)
             res.json({
@@ -45,3 +48,15 @@ exports.markAsComplet = async (req, res) => {
         })
     }
 }
+
+
+// exports.completedLessons = async (req,res) => {
+//     try {
+//         const { course } = req.params
+        
+//         const course=await LessonComplete.findOne({})
+
+//     } catch (err) {
+        
+//     }
+// }
