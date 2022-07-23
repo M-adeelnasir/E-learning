@@ -88,7 +88,7 @@ exports.checkAdmin = async (req, res, next) => {
 exports.haveCourse = async (req, res, next) => {
     try {
         const { slug } = req.params
-        const user = await User.findById({ _id: req.user_id })
+        const user = await User.findById({ _id: req.user._id })
         const course = await Course.findOne({ slug })
 
         let ids = [];
@@ -98,7 +98,7 @@ exports.haveCourse = async (req, res, next) => {
             ids.push(user.courses[i].toString())
         }
 
-        if (!ids.includes(course._id)) {
+        if (!ids.includes(course._id.toString())) {
             return res.sendStatus(403)
         } else {
 
@@ -106,6 +106,6 @@ exports.haveCourse = async (req, res, next) => {
         }
 
     } catch (err) {
-
+        console.log(err)
     }
 }
