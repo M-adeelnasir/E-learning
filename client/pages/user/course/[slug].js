@@ -72,7 +72,7 @@ const MyCourse = () => {
     const loadMarkedLesson = async () => {
         try {
             const { data } = await axios.get(`/api/v1/marked-lessons/${course._id}`)
-            console.log(data)
+            console.log(data.data)
             setCompletedLessons(data.data)
         } catch (err) {
             console.log(err)
@@ -81,6 +81,7 @@ const MyCourse = () => {
 
     useEffect(() => {
         if (course) loadMarkedLesson()
+
     }, [])
 
     return (

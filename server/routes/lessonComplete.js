@@ -3,9 +3,10 @@ const router = express.Router();
 
 
 const { requireSignIn, checkInstructor, checkAdmin, checkAuth } = require('../middleware/auth')
-const { markAsComplet } = require('../controllers/lessonComplete')
+const { markAsComplet, completedLessons } = require('../controllers/lessonComplete')
 
 router.post('/lesson/make-as-complete', requireSignIn, markAsComplet)
+router.get('/marked-lessons/:courseId', requireSignIn, completedLessons)
 
 
 module.exports = router

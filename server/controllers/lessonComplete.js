@@ -31,7 +31,7 @@ exports.markAsComplet = async (req, res) => {
 
         } else {
             const created = await LessonComplete.create({ user: req.user._id, course: courseId, lessons: lessonId })
-            res.json({
+            res.status(201).json({
                 success: true
             })
             console.log(created)
@@ -50,13 +50,21 @@ exports.markAsComplet = async (req, res) => {
 }
 
 
-// exports.completedLessons = async (req,res) => {
-//     try {
-//         const { course } = req.params
-        
-//         const course=await LessonComplete.findOne({})
+exports.completedLessons = async (req, res) => {
+    try {
+        const { courseId } = req.params
 
-//     } catch (err) {
-        
-//     }
-// }
+        const courseLessons = await LessonComplete.findOne({ user: req.user._id, course: courseId })
+
+        courseLessons && res.json({
+            data: courseLessons.lessons
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
+}
