@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TopNav from '../components/TopNav'
 import Course from '../components/forms/course/Course';
 import axios from 'axios'
-import { Affix } from 'antd';
+import { Affix, Skeleton } from 'antd';
 
 
 
@@ -12,11 +12,22 @@ const Index = ({ courses }) => {
 
 
     const [isSSR, setIsSSR] = useState(true);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setIsSSR(false);
     }, []);
 
+
+    useEffect(() => {
+        console.log(courses)
+        if (!courses) {
+            setLoading(true)
+        }
+        else {
+            setLoading(false)
+        }
+    }, [courses])
     return (
         <>
             <div className="cotainer-fluid">
@@ -31,7 +42,7 @@ const Index = ({ courses }) => {
 
                         {courses && courses.map((course) => (
                             <div className="col-md-4" key={course._id}>
-                                <Course course={course} />
+                                {loading ? <Skeleton /> : <Course course={course} />}
                             </div>
                         ))}
                     </div>

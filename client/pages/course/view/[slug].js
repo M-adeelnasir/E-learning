@@ -101,7 +101,7 @@ const Course = ({ course }) => {
             {!isSSR &&
 
                 <>
-                    <div className="pt-3 pb-3">
+                    <div className="pb-3">
                         <SingleCourseJumbo course={course} preview={preview} setPreview={setPreview} visible={visible} setVisible={setVisible} user={user} handlePaidEnrollment={handlePaidEnrollment} handleFreeEnrollment={handleFreeEnrollment} loading={loading} enrolled={enrolled} />
 
                         <CourseModal visible={visible} setVisible={setVisible} course={course} preview={preview} />
