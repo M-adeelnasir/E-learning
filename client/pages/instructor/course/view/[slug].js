@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Tooltip, Button, Modal, List } from 'antd'
-import { EditOutlined, CheckOutlined, UploadOutlined, CloseOutlined } from '@ant-design/icons'
+import { EditOutlined, CheckOutlined, UploadOutlined, CloseOutlined, UsergroupAddOutlined } from '@ant-design/icons'
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router'
 import { getCourse } from '../../../../requests/course'
@@ -29,6 +29,8 @@ const Course = () => {
 
     const [videoUploadText, setVideoUploadText] = useState("Upload Video")
     const [progress, setProgress] = useState(0)
+
+    const [studentCount, setStudentCount] = useState(0)
 
     const router = useRouter()
 
@@ -163,6 +165,20 @@ const Course = () => {
     }
 
 
+    const loadStudentCount = async (courseId) => {
+        try {
+            const { data } = await axios.post('/api/v1/instructor/course/enrolled-students', { courseId })
+            setStudentCount(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    useEffect(() => {
+        course && loadStudentCount(course._id)
+    }, [course])
+
     return (
         <InstructorRoute>
             <div className="container-fluid d-flex flex-row p-0 ">
@@ -189,17 +205,21 @@ const Course = () => {
 
                             </div>
                             <div className='m-4 d-flex'>
-                                <Tooltip className='text-info m-3' placement="top" title="Edit">
+
+                                <Tooltip className='text-info m-2' placement="top" title={`${studentCount} Enrolled`}>
+                                    <Button ><UsergroupAddOutlined /></Button>
+                                </Tooltip>
+                                <Tooltip className='text-info m-2' placement="top" title="Edit">
                                     <Button onClick={() => router.push(`/instructor/course/edit/${course.slug}`)}><EditOutlined /></Button>
                                 </Tooltip>
 
                                 {course && course.lessons.length < 5 ?
-                                    (<span className='text-danger text-center m-3' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
-                                    course.published ? <Tooltip className='text-danger m-3' placement="top"
+                                    (<span className='text-danger text-center m-2' style={{ marginLeft: '5px' }}>Atleast 5 lessons required to publish the course</span>) :
+                                    course.published ? <Tooltip className='text-danger m-2' placement="top"
                                         title="Unpublish">
                                         <Button onClick={(e) => handleUnpublish(course._id)} ><CloseOutlined /></Button>
                                     </Tooltip> :
-                                        (<Tooltip className='text-success m-3' placement="top" title="Pblish">
+                                        (<Tooltip className='text-success m-2' placement="top" title="Pblish">
                                             <Button onClick={handlePublish}><CheckOutlined /></Button>
                                         </Tooltip>)
                                 }
