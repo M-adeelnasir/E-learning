@@ -20,6 +20,7 @@
   "dependencies": {
     "aws-sdk": "^2.1171.0",
     "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
