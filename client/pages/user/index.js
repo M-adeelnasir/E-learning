@@ -48,14 +48,14 @@ const User = () => {
                                 className="display-1 "
                             />
                         </div>
-                        : <div className='container m-3'>
+                        : <div className='container'>
 
                             {courses && courses.length &&
 
                                 courses.map((course) => (
 
                                     <div className='d-flex justify-content-around  '>
-                                        <div className='d-flex flex-wrap '>
+                                        <div className='d-flex flex-wrap'>
                                             <img src={course && course.image && course.image.Location} alt="" srcset="" />
                                             <div className='d-flex flex-column mt-2' style={{ marginLeft: "10px" }}>
                                                 <Link href={`/user/course/${course && course.slug}`}><a ><h5 className='text-primary'>{course.name}</h5></a></Link>

@@ -68,6 +68,7 @@ const AddLesson = ({ handleAddLesson, setValues, values, handleFile, videoUpload
                 shape='round'
                 loading={uploading}
                 onClick={handleAddLesson}
+                disabled={uploading}
             >
                 Save Lesson
             </Button>

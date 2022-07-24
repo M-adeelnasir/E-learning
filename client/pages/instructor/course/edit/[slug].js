@@ -53,7 +53,6 @@ const Create = () => {
 
         try {
             const { data } = await updateCourse(state, image)
-            console.log(data)
             toast("Course Updated!")
         } catch (err) {
             console.log(err)
@@ -83,7 +82,6 @@ const Create = () => {
         if (router.isReady) {
             courseValues(router.query.slug)
         }
-        // console.log(current);
     }, [router.isReady])
 
 

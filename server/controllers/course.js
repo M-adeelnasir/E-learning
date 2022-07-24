@@ -588,9 +588,12 @@ exports.paymentIntent = async (req, res) => {
         const { courseId } = req.params
 
         const course = await Course.findById({ _id: courseId })
-        console.log("course===>", course)
 
-        const price = course.price * 100
+
+        const price = Math.round(course.price * 100)
+
+
+
 
 
 
@@ -603,7 +606,6 @@ exports.paymentIntent = async (req, res) => {
             payment_method_types: ['card'],
 
         })
-        // console.log("payent intent==>", paymentIntents)
 
 
         const user = await User.findByIdAndUpdate({ _id: req.user._id }, { stripPaymentIntent: { paymentIntents } })

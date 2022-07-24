@@ -37,17 +37,13 @@ const Course = () => {
     const readCourse = async (slug) => {
         try {
             const { data } = await getCourse(slug)
-            console.log(data.data);
             setCourse(data.data)
             setOk(true)
         } catch (err) {
             console.log(err);
         }
     }
-    useEffect(() => {
-        console.log(router.isReady);
 
-    }, [router.isReady])
 
 
     useEffect(() => {
@@ -58,9 +54,6 @@ const Course = () => {
     }, [router.isReady])
 
 
-    useEffect(() => {
-
-    }, [course, course._id])
 
 
 
@@ -75,25 +68,27 @@ const Course = () => {
     const handleAddLesson = async () => {
         setValues({ ...values, uploading: true })
 
-        console.log(course.instructor._id)
-
-        try {
-            console.log(course.instructor._id, course.slug)
-            const { data } = await addLesson(video.data, title, content, course.instructor._id, course.slug)
-            setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
-            setCourse(data.data)
-            setVideoUploadText("Upload Video")
-            setIsvisible(false)
-            setProgress(0)
-            toast("Lesson added")
-        } catch (err) {
-            console.log(err)
-            setValues({ ...values, uploading: false })
-            toast("Lesson add failed")
+        if (course && course.instructor && course.instructor._id) {
+            try {
+                const { data } = await addLesson(video.data, title, content, course && course.instructor && course.instructor._id, course.slug)
+                setValues({ ...values, video: {}, uploading: false, title: "", content: '' })
+                setCourse(data.data)
+                setVideoUploadText("Upload Video")
+                setIsvisible(false)
+                setProgress(0)
+                toast("Lesson added")
+            } catch (err) {
+                console.log(err)
+                setValues({ ...values, uploading: false })
+                toast("Lesson add failed")
+            }
         }
+
+
     }
 
     const handleFile = async (e) => {
+
         try {
             const file = e.target.files[0]
             setVideoUploadText(file.name)
@@ -102,7 +97,7 @@ const Course = () => {
             const videoData = new FormData()
             videoData.append("video", file)
 
-            const { data } = await axios.post(`/api/v1/course/video-upload/${course.instructor._id}`, videoData,
+            const { data } = await axios.post(`/api/v1/course/video-upload/${course && course.instructor && course.instructor._id}`, videoData,
                 {
                     onUploadProgress: (e) => {
                         setProgress(Math.round((100 * e.loaded) / e.total))
@@ -110,13 +105,16 @@ const Course = () => {
                     }
                 }
             )
-            console.log(data);
             setValues({ ...values, video: data, uploading: false })
 
         } catch (err) {
             console.log(err);
             setValues({ ...values, uploading: false })
+            toast("upload video failed try later!")
         }
+
+
+
     }
 
     const handleRemove = async () => {
@@ -125,7 +123,6 @@ const Course = () => {
             setValues({ ...values, uploading: true })
 
             const { data } = await axios.post(`/api/v1/course/video-remove/${course.instructor._id}`, { video: video.data })
-            console.log(data);
 
             setValues({ ...values, uploading: false, video: {} })
             setVideoUploadText("Upload another video")
@@ -144,7 +141,7 @@ const Course = () => {
             setCourse(data.data)
             toast("Course Unublished")
         } catch (err) {
-            toast("Course Unublished Failed")
+            toast("Course Unpublished Failed")
 
         }
     }
@@ -152,11 +149,9 @@ const Course = () => {
     const handlePublish = async () => {
 
         try {
-            console.log(course._id)
 
             const { data } = await coursePublish(course._id)
             setCourse(data.data)
-            console.log(data.data)
             toast("Course published")
         } catch (err) {
             toast("Course published Failed")
@@ -219,12 +214,11 @@ const Course = () => {
                                         title="Unpublish">
                                         <Button onClick={(e) => handleUnpublish(course._id)} ><CloseOutlined /></Button>
                                     </Tooltip> :
-                                        (<Tooltip className='text-success m-2' placement="top" title="Pblish">
+                                        (<Tooltip className='text-success m-2' placement="top" title="Publish">
                                             <Button onClick={handlePublish}><CheckOutlined /></Button>
                                         </Tooltip>)
                                 }
                             </div>
-
                         </div>
 
                         <div className="col-md-10 offset-md-1">
@@ -247,13 +241,7 @@ const Course = () => {
                         <div className='m-3'>
                             <h4 >{course && course.lessons && course.lessons.length} lessons</h4>
 
-                            {/* {
-                                course && course.lessons && course.lessons.map((lesson, i) =>
-                                    <div className='m-1' key={lesson._id}>
-                                        <span >{i + 1}.</span>
-                                        <span className="m-3">{lesson.title}</span>
-                                    </div>)
-                            } */}
+
 
                             <List
                                 dataSource={course && course.lessons}

@@ -23,7 +23,7 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, u
                     </div>
                 </div>
 
-                <div className="col-md-4 border border-white">
+                <div className="col-md-4 ">
                     {course.lessons && course.lessons[0] ?
                         (<div onClick={() => {
                             setPreview(course.lessons[0].video.Location)
@@ -33,7 +33,8 @@ const SingleCourseJumbo = ({ course, preview, setPreview, setVisible, visible, u
                                 url={course.lessons[0].video.Location}
                                 width="100%"
                                 height="250px"
-                                light={image.Location}
+                                light={course && course.image ? course.image.Location : true}
+                                controls
 
                             />
                         </div>) : (
