@@ -56,7 +56,7 @@ const login = () => {
         <input type="email" className="form-control mb-4" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="password" className="form-control mb-4" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-        <button disabled={!password || !email} className="btn btn-primary m-auto w-100" >{loading ? <div className="spinner-grow spinner-grow-sm text-light " ></div>
+        <button disabled={!password || !email || loading} className="btn btn-primary m-auto w-100" >{loading ? <div className="spinner-grow spinner-grow-sm text-light " ></div>
             : <span>Login</span>}</button>
     </form>
 

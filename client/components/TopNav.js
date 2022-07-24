@@ -45,17 +45,17 @@ const TopNav = () => {
 
 
     return (
-        <Menu mode='horizontal' selectedKeys={[current]} className="d-flex p-2">
+        <Menu mode='horizontal' selectedKeys={[current]} className="d-block p-2">
             <Menu.Item key='/' onClick={(e) => setCurrent(e.key)} icon={<AppstoreOutlined />}>
                 <Link href='/'>
-                    <a>App</a>
+                    <a>Courses</a>
                 </Link>
             </Menu.Item>
             {user && user !== null && user.role.includes("instructor") ? (<Menu.Item key='/instuctor/a' onClick={(e) => setCurrent(e.key)} icon={<CarryOutOutlined />}>
                 <Link href='/instructor/course/create'>
                     <a>Create Course</a>
                 </Link>
-            </Menu.Item>) : (
+            </Menu.Item>) : (user && user == null &&
                 <Menu.Item key='/instuctor' onClick={(e) => setCurrent(e.key)} icon={< TeamOutlined />}>
                     <Link href='/user/becomeInstructor'>
                         <a>Become Instructor</a>
@@ -63,35 +63,51 @@ const TopNav = () => {
                 </Menu.Item>
             )}
 
-            {!user && user == null && <Menu.Item key='/login' onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined />}>
+
+            {!user && user == null && <Menu.Item style={{ float: "right" }} key='/login' onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined />}>
                 <Link href='/login'>
                     <a>Login</a>
                 </Link>
             </Menu.Item>}
-            {!user && user == null && <Menu.Item key='/register' onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined />}>
+            {!user && user == null && <Menu.Item style={{ float: "right" }} key='/register' onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined />}>
                 <Link href='/register'>
                     <a>Register</a>
                 </Link>
             </Menu.Item>}
 
-            {user && user !== null && user.role.includes("instructor") && (<Menu.Item key='/instuctor' onClick={(e) => setCurrent(e.key)} icon={<CarryOutOutlined />}>
-                <Link href='/instructor'>
-                    <a>Instructor</a>
-                </Link>
-            </Menu.Item>)}
-
-            {user && user !== null && <Menu.SubMenu key='/logout' title={user && user.name.split(' ')[0]} icon={<UserOutlined />}>
-                {user && user !== null && <Menu.Item icon={<DashboardOutlined />} key='/dashboard' className="ml-auto">
-                    <Link href='/user'>
-                        <a>Dashboard</a>
-                    </Link>
-                </Menu.Item>}
-                {user && user !== null && <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />} className="ml-auto">
-                    Logout
-                </Menu.Item>}
 
 
-            </Menu.SubMenu>}
+            {user && user !== null &&
+                <Menu.SubMenu key='/logout'
+                    style={{ float: "right" }}
+                    title={user && user.name.split(' ')[0]}
+                    icon={<UserOutlined
+
+                    />}>
+                    {user && user !== null &&
+                        <Menu.Item icon={<DashboardOutlined
+                        />}
+                            key='/dashboard'
+                            className="ml-auto">
+
+                            {user && user !== null && user.role.includes("instructor") ? <span>
+                                <Link Link href='/instructor'>
+                                    <a>Dashboard</a>
+                                </Link>
+                            </span> : <span>
+                                <Link Link href='/user'>
+                                    <a>Dashboard</a>
+                                </Link>
+                            </span>}
+
+
+                        </Menu.Item>}
+                    {user && user !== null && <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />} className="ml-auto">
+                        Logout
+                    </Menu.Item>}
+
+
+                </Menu.SubMenu>}
 
 
 
