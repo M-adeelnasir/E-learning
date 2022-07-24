@@ -703,3 +703,23 @@ exports.userCourses = async (req, res) => {
         })
     }
 }
+
+
+
+
+exports.enrolledStudents = async (req, res) => {
+    try {
+        const { courseId } = req.body
+        const user = await User.find({ courses: courseId })
+
+
+        res.json(user.length)
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+            msg: "SERVER ERROR"
+        })
+    }
+}

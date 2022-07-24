@@ -73,4 +73,3 @@ exports.currentInstructor = async (req, res) => {
         })
     }
 }
-

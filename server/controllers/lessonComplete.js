@@ -30,11 +30,10 @@ exports.markAsComplet = async (req, res) => {
             })
 
         } else {
-            const created = await LessonComplete.create({ user: req.user._id, course: courseId, lessons: lessonId })
+            const created = await LessonComplete.create({ user: req.user._id, course: courseId, lessons: lessonId }, { new: true })
             res.status(201).json({
                 success: true
             })
-            console.log(created)
         }
 
 
