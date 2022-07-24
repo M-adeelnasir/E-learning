@@ -100,7 +100,6 @@ const Create = () => {
             Resizer.imageFileResizer(file, 300, 300, "JPEG", 100, 0, async (uri) => {
                 const { data } = await uploadImage(uri)
                 setImage(data.data)
-                console.log(data);
                 setState({ ...state, loading: false })
             })
         } catch (err) {
@@ -221,7 +220,6 @@ const Create = () => {
                     }
                 }
             )
-            console.log(data);
             setCurrent({ ...current, video: data })
             setUpload(false)
 
@@ -238,7 +236,6 @@ const Create = () => {
             setUpload(true)
 
             const { data } = await axios.post(`/api/v1/course/video-remove/${state.instructor._id}`, { video: video })
-            console.log(data);
 
             setVideo({})
 
@@ -260,7 +257,6 @@ const Create = () => {
         e.preventDefault()
         try {
             const { data } = await axios.post(`/api/v1/course/lesson-update/${router.query.slug}/${current._id}`, { ...current, video: video })
-            console.log(data)
             setVisible(false)
             toast("lesson updated")
             setVideoUploadText("Upload Video")

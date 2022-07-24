@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
     try {
         res.clearCookie("token")
-        console.log("user removed from cookies");
+        // console.log("user removed from cookies");
         return res.json({
             success: true,
             msg: "logout"
@@ -117,7 +117,6 @@ const sendToken = async (res, statusCode, user) => {
 
 
 exports.currentUser = async (req, res) => {
-    console.log(req.user);
     try {
         const { _id } = req.user;
         const user = await User.findById({ _id }).select("-password")
@@ -132,7 +131,7 @@ exports.currentUser = async (req, res) => {
         })
 
     } catch (err) {
-        console.log("ERROR==>", err);
+        // console.log("ERROR==>", err);
         res.status(500).json({
             success: false,
             msg: "Server error"
@@ -202,7 +201,7 @@ exports.forgotPassword = async (req, res) => {
 
             var sendPromise = new AWS.SES({ apiVersion: '2010-12-01' }).sendEmail(params).promise();
             sendPromise.then((data) => {
-                console.log(data);
+                // console.log(data);
                 res.json({
                     Success: true,
                     token: token,
@@ -250,13 +249,12 @@ exports.resetPassword = async (req, res) => {
                 msg: "No link found"
             })
         }
-        console.log(resetToken);
+        // console.log(resetToken);
 
         try {
 
             const token = jwt.verify(resetToken, process.env.JWT_SECRET_KEY)
         } catch (err) {
-            console.log("=======>", err);
 
             res.status(400).json({
                 success: false,

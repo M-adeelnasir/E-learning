@@ -68,7 +68,7 @@ exports.uploadImage = async (req, res) => {
 exports.removeImage = async (req, res) => {
     try {
         const { image } = req.body;
-        console.log(image)
+        // console.log(image)
         const params = {
             Bucket: image.Bucket,
             Key: image.key,
@@ -81,7 +81,6 @@ exports.removeImage = async (req, res) => {
                     msg: "Image removed Failed"
                 })
             }
-            console.log(data)
             res.json({
                 success: true,
                 msg: "Image Delete"
@@ -98,7 +97,6 @@ exports.removeImage = async (req, res) => {
 
 exports.createCourse = async (req, res) => {
     try {
-        console.log(req.body);
         const { name, description, price, paid, image, level } = req.body;
         const _id = req.user;
 
@@ -126,16 +124,16 @@ exports.createCourse = async (req, res) => {
             const course = await Course.create({
                 name, level, description, price, paid, image, slug: slugify(name), instructor: user._id
             })
-            console.log(course)
+            // console.log(course)
             res.json({
                 success: true,
                 data: course
             })
         } catch (err) {
-            console.log("HIT==>", err)
+            // console.log("HIT==>", err)
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -163,7 +161,7 @@ exports.getInstructorCourses = async (req, res) => {
             data: courses
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -187,7 +185,7 @@ exports.getCourse = async (req, res) => {
             data: course
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -231,7 +229,7 @@ exports.uploadVideo = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -245,7 +243,7 @@ exports.removeVideo = async (req, res) => {
         if (req.user._id !== instructorId) return res.sendStatus(400)
 
         const { video } = req.body
-        console.log(video)
+        // console.log(video)
 
         const { Bucket, Key } = video;
         const params = {
@@ -266,7 +264,7 @@ exports.removeVideo = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -280,7 +278,7 @@ exports.addLesson = async (req, res) => {
         const { slug, instructorId } = req.params
         const { video, title, content } = req.body
 
-        console.log(instructorId, req.user._id)
+        // console.log(instructorId, req.user._id)
 
         if (req.user._id !== instructorId) return res.sendStatus(400)
 
@@ -297,7 +295,7 @@ exports.addLesson = async (req, res) => {
             })
         }
 
-        console.log(course)
+        // console.log(course)
 
         res.json({
             success: true,
@@ -307,7 +305,7 @@ exports.addLesson = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -320,7 +318,6 @@ exports.updateCourse = async (req, res) => {
     try {
         const { slug } = req.body
 
-        console.log(req.body)
         const course = await Course.findOneAndUpdate({ slug }, req.body, { new: true })
 
 
@@ -333,7 +330,7 @@ exports.updateCourse = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -360,7 +357,7 @@ exports.removeLesson = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -377,7 +374,6 @@ exports.updateLesson = async (req, res) => {
 
         const course = await Course.findOne({ slug: courseSlug })
 
-        console.log(course)
         if (course.instructor.toString() !== req.user._id) return res.sendStatus(400)
 
         const lesson = await Course.updateOne({ "lessons._id": _id }, {
@@ -397,7 +393,7 @@ exports.updateLesson = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -414,7 +410,6 @@ exports.publishCourse = async (req, res) => {
         if (courseIns.instructor.toString() !== req.user._id) return res.sendStatus(400)
 
         const course = await Course.findByIdAndUpdate({ _id: courseId }, { published: true }, { new: true })
-        console.log(course)
 
         res.json({
             success: true,
@@ -422,7 +417,7 @@ exports.publishCourse = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -439,13 +434,12 @@ exports.unpublishCourse = async (req, res) => {
         if (courseIns.instructor.toString() !== req.user._id) return res.sendStatus(400)
 
         const course = await Course.findByIdAndUpdate({ _id: courseId }, { published: false }, { new: true })
-        console.log(course)
         res.json({
             success: true,
             data: course
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -465,7 +459,7 @@ exports.courses = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -487,7 +481,7 @@ exports.read = async (req, res) => {
             data: course
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -512,7 +506,7 @@ exports.checkEnrolment = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -545,7 +539,7 @@ exports.freeEnrollment = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -562,7 +556,6 @@ exports.paidEnrollment = async (req, res) => {
     try {
         const { courseId } = req.params;
 
-        console.log(courseId)
 
         const course = await Course.findById({ _id: courseId })
 
@@ -574,7 +567,7 @@ exports.paidEnrollment = async (req, res) => {
             success: true
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -615,7 +608,7 @@ exports.paymentIntent = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -639,7 +632,7 @@ exports.userBuy = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -652,7 +645,7 @@ exports.onPaymentSuccess = async (req, res) => {
     try {
         const { userId, courseId } = req.params;
 
-        console.log(userId, courseId)
+        // console.log(userId, courseId)
         // const user = await User.findById({ _id: userId })
 
 
@@ -662,7 +655,6 @@ exports.onPaymentSuccess = async (req, res) => {
             $addToSet: { courses: { _id: courseId } }
         }, { new: true })
         if (!user) return res.sendStatus(401)
-        console.log(user)
 
         res.json({
             success: true,
@@ -670,7 +662,7 @@ exports.onPaymentSuccess = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"
@@ -689,7 +681,6 @@ exports.userCourses = async (req, res) => {
         //will fetch all courses in user courses array of ids
         const courses = await Course.find({ _id: { $in: user.courses } }).populate("instructor", "_id name")
 
-        console.log(user)
 
         res.json({
             success: true,
@@ -698,7 +689,7 @@ exports.userCourses = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.status(500).json({
             success: false,
             msg: "SERVER ERRPR"

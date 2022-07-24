@@ -32,7 +32,6 @@ const Create = () => {
 
         try {
             const { data } = await addCourse(state, image)
-            console.log(data)
             toast("Welcome To New Course!")
             router.push('/instructor')
         } catch (err) {

@@ -51,12 +51,12 @@ const Provider = ({ children }) => {
 
             return new Promise((resolve, reject) => {
                 logoutUser().then((data) => {
-                    console.log("/401 err >logout");
+                    // console.log("/401 err >logout");
                     dispatch({ type: 'LOGOUT' })
                     window.localStorage.removeItem('user')
                     router.push('/login')
                 }).catch((err) => {
-                    console.log("AXIOS INTERCEPTORS ERROR=>", err);
+                    // console.log("AXIOS INTERCEPTORS ERROR=>", err);
                     reject(err)
                 })
 
@@ -72,7 +72,6 @@ const Provider = ({ children }) => {
     useEffect(() => {
         const getCsrfToken = async () => {
             const { data } = await axios.get('/api/v1/csrf-token')
-            console.log(data);
             axios.defaults.headers['X-CSRF-Token'] = data.getgetCsrfToken
         }
         getCsrfToken()

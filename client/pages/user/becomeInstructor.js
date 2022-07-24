@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useContext } from 'react'
 import { Context } from '../../context'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 import { UserSwitchOutlined, LoadingOutlined } from '@ant-design/icons'
 import TopNav from '../../components/TopNav'
 import { makeInstructor } from '../../requests/stripe'
@@ -11,31 +12,19 @@ const BecomeInstructor = () => {
     const [loading, setLoading] = useState(false)
     const { state: { user } } = useContext(Context)
 
+    const router = useRouter()
 
     const handlePayout = async () => {
         setLoading(true)
-        // try {
-        //     const { data } = await makeInstructor()
-        //     setLoading(false)
-        //     console.log(data);
-
-        //     window.location.href = data
-        // } catch (err) {
-        //     setLoading(false)
-        //     console.log(err);
-        // }
-        console.log("click 1");
-        makeInstructor().then((res) => {
-            console.log("click 2");
+        try {
+            const { data } = await makeInstructor()
             setLoading(false)
-            console.log(res);
-            console.log(res.data);
-
-            // window.location.href = data
-        }).catch((err) => {
+            router.push('/instructor')
+        } catch (err) {
             setLoading(false)
             console.log(err);
-        })
+        }
+
     }
 
     return (

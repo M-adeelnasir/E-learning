@@ -1,6 +1,6 @@
 import { Menu } from 'antd';
 import React, { useState, useEffect, useContext } from 'react'
-import { AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, DashboardOutlined, CarryOutOutlined, TeamOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, DashboardOutlined, CarryOutOutlined, TeamOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import Link from 'next/Link'
 import { useRouter } from 'next/router';
 import { logoutUser } from '../requests/user';
@@ -55,13 +55,23 @@ const TopNav = () => {
                 <Link href='/instructor/course/create'>
                     <a>Create Course</a>
                 </Link>
-            </Menu.Item>) : (user && user == null &&
+            </Menu.Item>) : (
                 <Menu.Item key='/instuctor' onClick={(e) => setCurrent(e.key)} icon={< TeamOutlined />}>
                     <Link href='/user/becomeInstructor'>
                         <a>Become Instructor</a>
                     </Link>
                 </Menu.Item>
             )}
+
+            {user && user !== null && user.role.includes("instructor") && (<Menu.Item key='/instuctor/a' onClick={(e) => setCurrent(e.key)} icon={<UserSwitchOutlined />}
+                style={{ float: "right" }}
+            >
+                <Link href='/instructor'>
+                    <a>Instructor</a>
+                </Link>
+            </Menu.Item>)}
+
+
 
 
             {!user && user == null && <Menu.Item style={{ float: "right" }} key='/login' onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined />}>
@@ -74,6 +84,9 @@ const TopNav = () => {
                     <a>Register</a>
                 </Link>
             </Menu.Item>}
+
+
+
 
 
 

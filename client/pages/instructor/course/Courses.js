@@ -32,11 +32,12 @@ const Courses = () => {
 
     return (
         <>
+            <h1 className='jumbotron bg-primary text-center pt-4 pb-4 grad'>Your Courses</h1>
             <div className="container">
 
                 {courses && courses.length > 0 &&
                     <div className="col-md-10">
-                        <h1 className='text-primary text-center mt-3'>Your Courses</h1>
+
 
                         {courses.map((course) => (
                             loading ? <Skeleton /> :

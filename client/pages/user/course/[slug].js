@@ -40,7 +40,7 @@ const MyCourse = () => {
 
             const { data } = await axios.get(`/api/v1/user/course/${router.query.slug}`)
             setCourse(data.data)
-            console.log(data.data)
+            // console.log(data.data)
         } catch (err) {
             console.log(err)
         }
@@ -73,7 +73,7 @@ const MyCourse = () => {
     const loadMarkedLesson = async () => {
         try {
             const { data } = await axios.get(`/api/v1/marked-lessons/${course && course._id}`)
-            console.log(data.data)
+            // console.log(data.data)
             setCompletedLessons(data.data)
 
         } catch (err) {
@@ -99,7 +99,7 @@ const MyCourse = () => {
                     maxWidth: 320
 
                 }}>
-                    <Affix offsetTop={3} onChange={(affixed) => console.log(affixed)}>
+                    <Affix offsetTop={3} >
                         <span>
 
                             <Button

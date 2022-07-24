@@ -17,7 +17,7 @@ const User = () => {
         setLoading(true)
         try {
             const { data: user } = await userCourses()
-            console.log(user.data)
+            // console.log(user.data)
             setCourses(user.data)
             setLoading(false)
         } catch (err) {

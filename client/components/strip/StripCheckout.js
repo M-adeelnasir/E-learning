@@ -30,9 +30,9 @@ const StripCheckout = ({ onReadyId }) => {
         console.log(id)
         try {
             const { data: user } = await axios.get(`/api/v1/course/buying/${id}`)
-            console.log(user.data)
+            // console.log(user.data)
             setCurrentUser(user.data)
-            console.log(user.data.stripPaymentIntent.paymentIntents.amount)
+            // console.log(user.data.stripPaymentIntent.paymentIntents.amount)
             setAmount(user.data.stripPaymentIntent.paymentIntents.amount)
             setClientSecret(user.data.stripPaymentIntent.paymentIntents.client_secret)
 
@@ -79,12 +79,9 @@ const StripCheckout = ({ onReadyId }) => {
         })
 
         if (payload.error) {
-            // console.log(payload.error);
-            console.log(payload.error)
             setProcessing(false)
             setError(`Pyament Faild ${payload.error.message}`)
         } else {
-            console.log(JSON.stringify(payload, null, 4));
 
             try {
                 const { data } = await axios.put(`/api/v1/course/payment/${currentUser.stripeSession}/${currentUser._id}`)

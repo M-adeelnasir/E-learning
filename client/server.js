@@ -21,7 +21,7 @@ app.prepare().then(() => {
 
     server.listen(3000, ((err) => {
         if (err) throw err;
-        console.log('>Ready on http://localhost:4000/api/v1');
+        // console.log('>Ready on http://localhost:4000/api/v1');
     }))
 }).catch((err) => {
     console.log("ERROR", err);

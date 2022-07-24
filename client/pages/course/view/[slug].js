@@ -54,7 +54,6 @@ const Course = ({ course }) => {
         if (!user) {
             return router.push('/login');
         }
-        console.log(enrolled)
         if (enrolled) {
             return router.push(`/user/course/${course.slug}`)
         }
@@ -79,13 +78,12 @@ const Course = ({ course }) => {
         try {
             if (enrolled) return router.push(`/user/course/${course.slug}`)
 
-            console.log(course.paid, "hited")
             const { data } = await axios.put(`/api/v1/course/purchase/${course._id}`)
-            console.log(data.data.stripeSession)
+            // console.log(data.data.stripeSession)
 
             const { data: result } = await axios.put(`/api/v1/course/paymentIntent/${data.data.stripeSession}`)
 
-            console.log(result.data)
+            // console.log(result.data)
 
             router.push(`/course/payment/${data.data._id}`)
 

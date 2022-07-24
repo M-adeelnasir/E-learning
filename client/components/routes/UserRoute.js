@@ -16,7 +16,6 @@ const UserRoute = ({ children }) => {
             setOk(true)
 
         } catch (err) {
-            console.log(err);
             setOk(false)
             router.push('/login')
         }

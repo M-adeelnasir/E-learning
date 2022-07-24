@@ -20,7 +20,6 @@ const Index = ({ courses }) => {
 
 
     useEffect(() => {
-        console.log(courses)
         if (!courses) {
             setLoading(true)
         }

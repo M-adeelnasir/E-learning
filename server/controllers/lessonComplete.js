@@ -13,9 +13,6 @@ exports.markAsComplet = async (req, res) => {
             course: courseId
         })
 
-        console.log(lessonId)
-
-
 
         if (existing) {
             const update = await LessonComplete.findOneAndUpdate({
@@ -24,7 +21,7 @@ exports.markAsComplet = async (req, res) => {
             }, {
                 $addToSet: { lessons: lessonId }
             })
-            console.log(update)
+            // console.log(update)
             res.json({
                 success: true
             })
@@ -40,7 +37,7 @@ exports.markAsComplet = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err)
+
         res.status(500).json({
             success: false,
             msg: "SERVER ERROR"
@@ -60,7 +57,7 @@ exports.completedLessons = async (req, res) => {
         })
 
     } catch (err) {
-        console.log(err)
+
         res.status(500).json({
             success: false,
             msg: "SERVER ERROR"

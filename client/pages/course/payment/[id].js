@@ -25,10 +25,7 @@ const Payment = () => {
         }
     }, [router.isReady])
 
-    useEffect(() => {
-        console.log(stripePromise)
 
-    }, [stripePromise])
 
 
     return (
