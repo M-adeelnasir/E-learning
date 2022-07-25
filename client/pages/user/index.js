@@ -54,17 +54,17 @@ const User = () => {
 
                                 courses.map((course) => (
 
-                                    <div className='d-flex justify-content-around  '>
+                                    <div className='d-flex justify-space-around  ' >
                                         <div className='d-flex flex-wrap'>
                                             <img src={course && course.image && course.image.Location} alt="" srcset="" />
-                                            <div className='d-flex flex-column mt-2' style={{ marginLeft: "10px" }}>
+                                            <div className='d-flex flex-column mt-2 w-50' style={{ marginLeft: "10px" }}>
                                                 <Link href={`/user/course/${course && course.slug}`}><a ><h5 className='text-primary'>{course.name}</h5></a></Link>
                                                 <p className='mb-0' >{course.description.substr(0, 100)}</p>
                                                 <p className='mb-0'>By: {course && course.instructor && course.instructor.name}</p>
                                                 <p className='mb-0'>{course && course.lessons && course.lessons.length} Lessons</p>
                                             </div>
                                         </div>
-                                        <h3 className="self-align-center text-center m-auto text-primary"><Link href={`/user/course/${course && course.slug}`}>
+                                        <h3 className="self-align-center text-center mt-3 text-primary"><Link href={`/user/course/${course && course.slug}`}>
                                             <a >
                                                 <PlayCircleOutlined className='' style={{ cursor: "pointer" }} />
                                             </a>
