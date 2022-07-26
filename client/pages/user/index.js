@@ -28,6 +28,8 @@ const User = () => {
 
 
     useEffect(() => {
+
+        //loads the courses
         loadCourses()
     }, [])
 
