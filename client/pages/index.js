@@ -8,9 +8,6 @@ import { Affix, Skeleton } from 'antd';
 
 const Index = ({ courses }) => {
 
-
-
-
     const [isSSR, setIsSSR] = useState(true);
     const [loading, setLoading] = useState(false)
 
